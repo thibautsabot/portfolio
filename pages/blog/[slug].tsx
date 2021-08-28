@@ -1,7 +1,11 @@
 import getBlogPosts from "../../utils/getBlogPosts";
 import getBlogPostContent from "../../utils/getBlogPostContent";
 
-export default function BlogPost({ content }) {
+interface Props {
+  content: string
+}
+
+export default function BlogPost({ content }: Props) {
   return <div>Hello {content}</div>;
 }
 

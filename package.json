@@ -10,13 +10,15 @@
   },
   "dependencies": {
     "@octokit/graphql": "^4.7.0",
-    "@octokit/rest": "^18.9.1",
+    "@octokit/graphql-schema": "^10.67.0",
     "next": "11.1.0",
     "react": "17.0.2",
     "react-dom": "17.0.2"
   },
   "devDependencies": {
+    "@types/react": "^17.0.19",
     "eslint": "7.32.0",
-    "eslint-config-next": "11.1.0"
+    "eslint-config-next": "11.1.0",
+    "typescript": "^4.4.2"
   }
 }

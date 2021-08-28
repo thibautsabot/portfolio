@@ -1,5 +1,7 @@
 import Head from "next/head";
 import Image from "next/image";
+import { graphql as gitHubgraphql } from "@octokit/graphql";
+import { User } from "@octokit/graphql-schema";
 
 export default function Home({ discussions }) {
   return (
@@ -31,14 +33,13 @@ export default function Home({ discussions }) {
 }
 
 export async function getStaticProps() {
-  const { graphql: gitHubgraphql } = require("@octokit/graphql");
-
   const graphqlWithAuth = gitHubgraphql.defaults({
     headers: {
       authorization: `bearer ${process.env.GITHUB_TOKEN} `,
     },
   });
-  const discussions = await graphqlWithAuth(`
+
+  const { user } = await graphqlWithAuth<{ user: User }>(`
     {
       user(login: "thibautsabot") {
         repositoryDiscussionComments(first: 10) {
@@ -57,7 +58,7 @@ export async function getStaticProps() {
 
   return {
     props: {
-      discussions: discussions.user.repositoryDiscussionComments.edges,
+      discussions: user.repositoryDiscussionComments.edges,
     },
     revalidate: 100,
   };

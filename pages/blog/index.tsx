@@ -1,6 +1,10 @@
 import getBlogPosts from "../../utils/getBlogPosts";
 
-export default function Blog({ posts }) {
+interface Props { 
+  posts: string[]
+}
+
+export default function Blog({ posts }: Props) {
   return (
     <div>
       {posts.map((post, i) => {
