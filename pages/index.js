@@ -16,7 +16,6 @@ export default function Home({ discussions }) {
         {discussions.map(({ node }) => (
           <p key={node.createdAt}>{node.bodyText}</p>
         ))}
-        <p>How are you ?</p>
       </main>
 
       <footer>
