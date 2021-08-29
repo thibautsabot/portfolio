@@ -1,5 +1,5 @@
 import useSWR from "swr";
-import { fetcher } from "./fetcher";
+import { fetcher } from "../utils/fetcher";
 import { DiscussionCommentEdge } from "@octokit/graphql-schema";
 
 interface Props {

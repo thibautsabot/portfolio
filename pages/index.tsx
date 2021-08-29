@@ -1,6 +1,6 @@
 import Head from "next/head";
 import Image from "next/image";
-import getDiscussions from "./github/getDiscussions";
+import getDiscussions from "../src/github/utils/getDiscussions";
 import { DiscussionCommentEdge } from "@octokit/graphql-schema";
 
 interface Props {
