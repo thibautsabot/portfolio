@@ -1,9 +1,13 @@
 import Head from "next/head";
 import Image from "next/image";
-import { graphql as gitHubgraphql } from "@octokit/graphql";
-import { User } from "@octokit/graphql-schema";
+import getDiscussions from "./github/getDiscussions";
+import { DiscussionCommentEdge } from "@octokit/graphql-schema";
 
-export default function Home({ discussions }) {
+interface Props {
+  discussions: DiscussionCommentEdge[];
+}
+
+export default function Home({ discussions }: Props) {
   return (
     <div>
       <Head>
@@ -33,32 +37,11 @@ export default function Home({ discussions }) {
 }
 
 export async function getStaticProps() {
-  const graphqlWithAuth = gitHubgraphql.defaults({
-    headers: {
-      authorization: `bearer ${process.env.GITHUB_TOKEN} `,
-    },
-  });
-
-  const { user } = await graphqlWithAuth<{ user: User }>(`
-    {
-      user(login: "thibautsabot") {
-        repositoryDiscussionComments(first: 10) {
-          edges {
-            node {
-              createdAt
-              bodyText
-              upvoteCount
-              isAnswer
-            }
-          }
-        }
-      }
-    }
-  `);
+  const discussions = await getDiscussions();
 
   return {
     props: {
-      discussions: user.repositoryDiscussionComments.edges,
+      discussions,
     },
     revalidate: 100,
   };
