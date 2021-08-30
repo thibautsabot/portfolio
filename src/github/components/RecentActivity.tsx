@@ -1,7 +1,7 @@
 import useSWR from "swr";
 import { fetcher } from "../utils/fetcher";
 import { Endpoints } from "@octokit/types";
-import Link from "next/link";
+import styles from './activity.module.css'
 import {
   ForkItem,
   PublicItem,
@@ -33,7 +33,7 @@ export default function RecentActivity() {
   if (!data) return <p>Loading...</p>;
 
   return (
-    <div>
+    <div className={styles.RecentActivity}>
       <h1>Recent activity</h1>
       {data
         .filter((event) => desiredEvents.includes(event.type))

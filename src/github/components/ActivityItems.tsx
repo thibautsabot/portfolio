@@ -6,16 +6,17 @@ import star from "../assets/star.png";
 import branch from "../assets/branch.png";
 import release from "../assets/release.png";
 import styles from "./activity.module.css";
+import MarqueeDescription from "../../components/MarqueeDescription";
 
 function ForkItem({ event }) {
   return (
     <Link href={event.payload.forkee.html_url}>
       <a className={styles.itemLink}>
         <Image width={24} height={24} alt="fork" src={fork} />
-        <p className={styles.itemText}>
-          New fork of <code>{event.repo.name}</code> -
-          &quot;{event.payload.forkee.description}&quot;
-        </p>
+        <MarqueeDescription containerWidth={400}>
+          New fork of <code>{event.repo.name}</code> - &quot;
+          {event.payload.forkee.description}&quot;
+        </MarqueeDescription>
       </a>
     </Link>
   );
@@ -26,9 +27,9 @@ function PublicItem({ event }) {
     <Link passHref href={"https://github.com/" + event.repo.name}>
       <a className={styles.itemLink}>
         <Image width={24} height={24} alt="unlock" src={unlock} />
-        <p className={styles.itemText}>
+        <MarqueeDescription containerWidth={400}>
           <code>{event.repo.name}</code> was just made public!
-        </p>
+        </MarqueeDescription>
       </a>
     </Link>
   );
@@ -39,10 +40,9 @@ function WatchItem({ event }) {
     <Link passHref href={"https://github.com/" + event.repo.name}>
       <a className={styles.itemLink}>
         <Image width={24} height={24} alt="star" src={star} />
-        <p className={styles.itemText}>
-          {" "}
+        <MarqueeDescription containerWidth={400}>
           <code>{event.repo.name}</code> is a new starred repository!
-        </p>
+        </MarqueeDescription>
       </a>
     </Link>
   );
@@ -59,10 +59,10 @@ function CreateItem({ event }) {
       >
         <a className={styles.itemLink}>
           <Image width={24} height={24} alt="branch" src={branch} />
-          <p className={styles.itemText}>
+          <MarqueeDescription containerWidth={400}>
             The <code>{event.payload.ref}</code> branch was created on{" "}
             <code>{event.repo.name}</code>.
-          </p>
+          </MarqueeDescription>
         </a>
       </Link>
     );
@@ -76,10 +76,10 @@ function ReleaseItem({ event }) {
     <Link passHref href={event.payload.release.html_url}>
       <a className={styles.itemLink}>
         <Image width={24} height={24} alt="release" src={release} />
-        <p className={styles.itemText}>
+        <MarqueeDescription containerWidth={400}>
           New release <code>{event.payload.release.body}</code> on{" "}
           <code>{event.repo.name}</code>!
-        </p>
+        </MarqueeDescription>
       </a>
     </Link>
   );

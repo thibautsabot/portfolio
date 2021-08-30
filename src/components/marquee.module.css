@@ -1,0 +1,21 @@
+.itemText {
+  width: 400px;
+  height: 30px;
+  margin: 0;
+  padding-left: 5px;
+  display: flex;
+  align-items: center;
+  overflow: hidden;
+}
+
+.itemText > span {
+  width: 400px;
+  height: 30px;
+  white-space: nowrap;
+  transform: translateX(0);
+}
+
+.itemText:hover .shouldTranslate {
+  width: auto;
+  transform: translateX(calc(400px - 100%));
+}
