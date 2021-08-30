@@ -14,12 +14,12 @@ interface Props {
 export default function GithubPage({ discussions }: Props) {
   return (
     <div>
-      <Discussions discussions={discussions} />
+      {/* <Discussions discussions={discussions} /> */}
       <RecentActivity />
-      <Repositories />
+      {/* <Repositories />
       <PullRequests />
       <Commits />
-      <StarredRepositories />
+      <StarredRepositories /> */}
     </div>
   );
 }

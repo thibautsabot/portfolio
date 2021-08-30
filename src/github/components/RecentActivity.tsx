@@ -1,6 +1,14 @@
 import useSWR from "swr";
 import { fetcher } from "../utils/fetcher";
 import { Endpoints } from "@octokit/types";
+import Link from "next/link";
+import {
+  ForkItem,
+  PublicItem,
+  WatchItem,
+  CreateItem,
+  ReleaseItem,
+} from "./ActivityItems";
 
 type listUserReposResponse =
   Endpoints["GET /users/{username}/events"]["response"]["data"];
@@ -11,10 +19,11 @@ export default function RecentActivity() {
     fetcher
   );
   const desiredEvents = [
-    "FollowEvent",
     "ForkEvent",
     "PublicEvent",
     "WatchEvent",
+    "CreateEvent",
+    "ReleaseEvent",
     // "PullRequestReviewCommentEvent",
     // "IssueCommentEvent",
     // "CommitCommentEvent",
@@ -28,9 +37,22 @@ export default function RecentActivity() {
       <h1>Recent activity</h1>
       {data
         .filter((event) => desiredEvents.includes(event.type))
-        .map((event) => (
-          <p key={event.id}>{event.type}</p>
-        ))}
+        .map((event) => {
+          switch (event.type) {
+            case "ForkEvent":
+              return <ForkItem event={event} />;
+            case "PublicEvent":
+              return <PublicItem event={event} />;
+            case "WatchEvent":
+              return <WatchItem event={event} />;
+            case "CreateEvent":
+              return <CreateItem event={event} />;
+            case "ReleaseEvent":
+              return <ReleaseItem event={event} />;
+            default:
+              return null;
+          }
+        })}
     </div>
   );
 }
