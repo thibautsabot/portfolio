@@ -1,0 +1,9 @@
+.itemLink {
+  display: flex;
+  align-items: center;
+}
+
+.itemText {
+  margin: 0;
+  padding-left: 5px;
+}
