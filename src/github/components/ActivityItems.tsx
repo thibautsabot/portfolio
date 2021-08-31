@@ -1,10 +1,10 @@
 import Link from "next/link";
 import Image from "next/image";
-import fork from "../assets/fork.png";
-import unlock from "../assets/unlock.png";
-import star from "../assets/star.png";
-import branch from "../assets/branch.png";
-import release from "../assets/release.png";
+import fork from "../assets/github/fork.png";
+import unlock from "../assets/github/unlock.png";
+import star from "../assets/github/star.png";
+import branch from "../assets/github/branch.png";
+import release from "../assets/github/release.png";
 import styles from "./activity.module.css";
 import MarqueeDescription from "../../components/MarqueeDescription";
 

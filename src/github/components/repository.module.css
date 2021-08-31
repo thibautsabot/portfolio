@@ -1,18 +1,22 @@
-.itemLink {
+.name {
+  display: flex;
+}
+
+.container {
   display: flex;
   align-items: center;
 }
 
-.RecentActivity {
+.Repositories {
   width: 430px;
   box-shadow: 8px 8px 5px #a1b0f9;
   border-radius: 5px;
-
-  margin-top: 25px;
-  margin-left: 25px;
+  margin: 25px;
 }
 
 .title {
+  font-weight: bold;
+  display: block;
   font-size: 12px;
   font-family: monospace;
   margin: 0;

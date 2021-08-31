@@ -16,8 +16,8 @@ export default function GithubPage({ discussions }: Props) {
     <div>
       {/* <Discussions discussions={discussions} /> */}
       <RecentActivity />
-      {/* <Repositories />
-      <PullRequests />
+      <Repositories />
+      {/* <PullRequests />
       <Commits />
       <StarredRepositories /> */}
     </div>

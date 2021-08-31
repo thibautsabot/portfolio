@@ -34,7 +34,8 @@ export default function RecentActivity() {
 
   return (
     <div className={styles.RecentActivity}>
-      <h1>Recent activity</h1>
+      <h1 className={styles.title}>Recent activity</h1>
+      <div className={styles.content}>
       {data
         .filter((event) => desiredEvents.includes(event.type))
         .map((event) => {
@@ -53,6 +54,7 @@ export default function RecentActivity() {
               return null;
           }
         })}
+    </div>
     </div>
   );
 }
