@@ -4,8 +4,8 @@ import Discussions from "../src/github/components/Discussions";
 import Repositories from "../src/github/components/Repositories";
 import PullRequests from "../src/github/components/PullRequests";
 import Commits from "../src/github/components/Commits";
-import StarredRepositories from "../src/github/components/StarredRepositories";
 import RecentActivity from "../src/github/components/RecentActivity";
+import styles from "./githubpage.module.css";
 
 interface Props {
   discussions: DiscussionCommentEdge[];
@@ -13,13 +13,12 @@ interface Props {
 
 export default function GithubPage({ discussions }: Props) {
   return (
-    <div>
-      {/* <Discussions discussions={discussions} /> */}
+    <div className={styles.GithubPage}>
+      <Discussions discussions={discussions} />
       <RecentActivity />
-      <Repositories />
       <PullRequests />
       <Commits />
-      {/* <StarredRepositories /> */}
+      <Repositories />
     </div>
   );
 }

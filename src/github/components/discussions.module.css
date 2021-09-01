@@ -1,18 +1,37 @@
-.itemLink {
+.name {
   display: flex;
-  align-items: center;
 }
 
-.RecentActivity {
-  width: 430px;
-  box-shadow: 8px 8px 5px #a1b0f9;
+.container {
+  display: flex;
+  align-items: center;
+  position: relative;
+}
+
+.Discussions {
+  width: 480px;
+  box-shadow: 8px 8px 5px #f4a1f9;
   border-radius: 5px;
+  margin: 25px;
   height: 100%;
-  margin-top: 25px;
-  margin-left: 25px;
+}
+
+.upvote {
+  position: absolute;
+  bottom: -10px;
+  left: 15px;
+  border-radius: 50px;
+  width: 15px;
+  height: 15px;
+  font-size: 10px;
+  display: flex;
+  justify-content: center;
+  background-color: #45d25a;
 }
 
 .title {
+  font-weight: bold;
+  display: block;
   font-size: 12px;
   font-family: monospace;
   margin: 0;

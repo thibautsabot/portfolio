@@ -18,6 +18,13 @@ export default async function getDiscussions() {
                   bodyText
                   upvoteCount
                   isAnswer
+                  id
+                  url
+                  discussion {
+                    repository {
+                      name
+                    }
+                  }
                 }
               }
             }
