@@ -19,7 +19,7 @@ export default function PullRequests() {
 
   if (error) return <p>An error has occurred.</p>;
   if (!data) return <p>Loading...</p>;
-  console.log(data);
+
   return (
     <div className={styles.Repositories}>
       <Link href="https://github.com/thibautsabot?tab=repositories">

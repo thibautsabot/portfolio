@@ -1,7 +1,12 @@
 import useSWR from "swr";
 import { fetcher } from "../utils/fetcher";
+import Link from "next/link";
+import styles from "./repository.module.css";
+import MarqueeDescription from "../../components/MarqueeDescription";
+import RepositoryIcon from './RepositoryIcon'
 
 const getCommitMessage = (commit) => commit?.payload?.commits[0]?.message;
+const getCommitHash = (commit) => commit?.payload?.commits[0]?.sha;
 
 const getUniqCommits = (events = []) => {
   const commits = events.filter((event) => event.type === "PushEvent");
@@ -27,11 +32,19 @@ export default function Commits() {
   if (!data) return <p>Loading...</p>;
 
   return (
-    <div>
-      <h1>Commits</h1>
+    <div className={styles.Repositories}>
+      <h1 className={styles.title}>Commits</h1>
+      <div className={styles.content}>
       {getUniqCommits(data).map((commit) => (
-        <p key={commit.id}>{getCommitMessage(commit)}</p>
+        <Link key={commit.id} href={`https://github.com/${commit.repo.name}/commit/${getCommitHash(commit)}`}>
+          <a className={styles.container}>
+          <RepositoryIcon name={commit.repo.name.replace('thibautsabot/', '')} />
+            <MarqueeDescription containerWidth={400}>
+              {getCommitMessage(commit)}
+            </MarqueeDescription>
+          </a>
+        </Link>
       ))}
-    </div>
+    </div></div>
   );
 }
