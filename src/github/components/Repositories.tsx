@@ -1,10 +1,10 @@
-import useSWR from "swr";
-import { fetcher } from "../utils/fetcher";
 import { Endpoints } from "@octokit/types"
-import styles from "./repository.module.css";
 import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
 import RepositoryIcon from './RepositoryIcon'
+import { fetcher } from "../utils/fetcher";
+import styles from "./repository.module.scss";
+import useSWR from "swr";
 
 type listUserReposResponse =
   Endpoints["GET /users/{username}/repos"]["response"]["data"];

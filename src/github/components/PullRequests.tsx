@@ -1,12 +1,12 @@
-import useSWR from "swr";
-import { fetcher } from "../utils/fetcher";
 import { Endpoints } from "@octokit/types";
-import Link from "next/link";
-import styles from "./repository.module.css";
-import MarqueeDescription from "../../components/MarqueeDescription";
 import Image from "next/image";
+import Link from "next/link";
+import MarqueeDescription from "../../components/MarqueeDescription";
+import { fetcher } from "../utils/fetcher";
 import merged from "../assets/github/merged.png";
 import pr from "../assets/github/pr.png";
+import styles from "./repository.module.scss";
+import useSWR from "swr";
 
 type listUserPullRequestsResponse =
   Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"];

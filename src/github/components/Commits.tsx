@@ -1,9 +1,9 @@
-import useSWR from "swr";
-import { fetcher } from "../utils/fetcher";
 import Link from "next/link";
-import styles from "./repository.module.css";
 import MarqueeDescription from "../../components/MarqueeDescription";
 import RepositoryIcon from './RepositoryIcon'
+import { fetcher } from "../utils/fetcher";
+import styles from "./repository.module.scss";
+import useSWR from "swr";
 
 const getCommitMessage = (commit) => commit?.payload?.commits[0]?.message;
 const getCommitHash = (commit) => commit?.payload?.commits[0]?.sha;

@@ -1,8 +1,8 @@
 import { DiscussionCommentEdge } from "@octokit/graphql-schema";
-import Link from "next/link";
-import styles from "./discussions.module.css";
-import MarqueeDescription from "../../components/MarqueeDescription";
 import Image from "next/image";
+import Link from "next/link";
+import MarqueeDescription from "../../components/MarqueeDescription";
+import styles from "./discussions.module.scss";
 import upvote from '../assets/upvote.png'
 
 interface Props {

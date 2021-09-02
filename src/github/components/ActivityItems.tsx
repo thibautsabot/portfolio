@@ -1,12 +1,12 @@
-import Link from "next/link";
 import Image from "next/image";
-import fork from "../assets/github/fork.png";
-import unlock from "../assets/github/unlock.png";
-import star from "../assets/github/star.png";
-import branch from "../assets/github/branch.png";
-import release from "../assets/github/release.png";
-import styles from "./activity.module.css";
+import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
+import branch from "../assets/github/branch.png";
+import fork from "../assets/github/fork.png";
+import release from "../assets/github/release.png";
+import star from "../assets/github/star.png";
+import styles from "./activity.module.scss";
+import unlock from "../assets/github/unlock.png";
 
 function ForkItem({ event }) {
   return (

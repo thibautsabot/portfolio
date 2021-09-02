@@ -1,5 +1,6 @@
-import styles from "./marquee.module.css";
 import { useCallback, useState } from "react";
+
+import styles from "./marquee.module.scss";
 
 // Make sure our ref is valid
 function useUpdatedTextRef() {
