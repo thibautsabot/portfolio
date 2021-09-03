@@ -5,7 +5,7 @@ import MarqueeDescription from "../../components/MarqueeDescription";
 import { fetcher } from "../utils/fetcher";
 import merged from "../assets/github/merged.png";
 import pr from "../assets/github/pr.png";
-import styles from "./repository.module.scss";
+import styles from "./pullrequests.module.scss";
 import useSWR from "swr";
 
 type listUserPullRequestsResponse =
@@ -21,7 +21,7 @@ export default function PullRequests() {
   if (!data) return <p>Loading...</p>;
 
   return (
-    <div className={styles.Repositories}>
+    <div className={styles.PullRequests}>
       <Link href="https://github.com/thibautsabot?tab=repositories">
         <a className={styles.title}>Pull Requests</a>
       </Link>

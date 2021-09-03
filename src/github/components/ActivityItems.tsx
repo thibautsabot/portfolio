@@ -5,7 +5,7 @@ import branch from "../assets/github/branch.png";
 import fork from "../assets/github/fork.png";
 import release from "../assets/github/release.png";
 import star from "../assets/github/star.png";
-import styles from "./activity.module.scss";
+import styles from "./recentactivity.module.scss";
 import unlock from "../assets/github/unlock.png";
 
 function ForkItem({ event }) {
@@ -77,7 +77,7 @@ function ReleaseItem({ event }) {
       <a className={styles.itemLink}>
         <Image width={24} height={24} alt="release" src={release} />
         <MarqueeDescription containerWidth={400}>
-          New release <code>{event.payload.release.body}</code> on{" "}
+          New release  <code>{event.payload.release.body}</code> on{" "}
           <code>{event.repo.name}</code>!
         </MarqueeDescription>
       </a>

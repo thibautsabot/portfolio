@@ -2,7 +2,7 @@ import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
 import RepositoryIcon from './RepositoryIcon'
 import { fetcher } from "../utils/fetcher";
-import styles from "./repository.module.scss";
+import styles from "./commits.module.scss";
 import useSWR from "swr";
 
 const getCommitMessage = (commit) => commit?.payload?.commits[0]?.message;
@@ -32,7 +32,7 @@ export default function Commits() {
   if (!data) return <p>Loading...</p>;
 
   return (
-    <div className={styles.Repositories}>
+    <div className={styles.Commits}>
       <h1 className={styles.title}>Commits</h1>
       <div className={styles.content}>
       {getUniqCommits(data).map((commit) => (

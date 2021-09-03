@@ -8,7 +8,7 @@ import {
 
 import { Endpoints } from "@octokit/types";
 import { fetcher } from "../utils/fetcher";
-import styles from "./activity.module.scss";
+import styles from "./recentactivity.module.scss";
 import useSWR from "swr";
 
 type listUserReposResponse =

@@ -3,7 +3,7 @@ import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
 import RepositoryIcon from './RepositoryIcon'
 import { fetcher } from "../utils/fetcher";
-import styles from "./repository.module.scss";
+import styles from "./repositories.module.scss";
 import useSWR from "swr";
 
 type listUserReposResponse =
