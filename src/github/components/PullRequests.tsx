@@ -5,7 +5,7 @@ import MarqueeDescription from "../../components/MarqueeDescription";
 import { fetcher } from "../utils/fetcher";
 import merged from "../assets/github/merged.png";
 import pr from "../assets/github/pr.png";
-import styled from "styled-components";
+import styled from '@emotion/styled'
 import useSWR from "swr";
 
 type listUserPullRequestsResponse =

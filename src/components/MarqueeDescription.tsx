@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import styled from "styled-components";
+import styled from '@emotion/styled'
 
 const ItemContainer = styled.p`
   width: 80%;
@@ -13,7 +13,7 @@ const ItemContainer = styled.p`
   align-items: center;
 
   @media (min-width: 960px) {
-    width: ${(props) => props.containerWidth}px;
+    width: ${(props: any) => props.containerWidth}px;
     height: 30px;
   }
 `;
@@ -22,10 +22,10 @@ const ItemWrapper = styled.span`
   width: 80%;
   height: 50px;
   display: flex;
-  transition: ${(props) => props.transitionDuration};
+  transition: ${(props: any) => props.transitionDuration};
 
   @media (min-width: 960px) {
-    width: ${(props) => props.containerWidth}px;
+    width: ${(props: any) => props.containerWidth}px;
     height: 30px;
   }
 
@@ -33,10 +33,12 @@ const ItemWrapper = styled.span`
     width: auto;
 
     transform: ${(props) =>
+          // @ts-ignore
       props.shouldTranslate ? "translateX(calc(80% - 100%))" : ""};
 
     @media (min-width: 960px) {
       transform: ${(props) =>
+            // @ts-ignore
         props.shouldTranslate ? `translateX(calc(${props.containerWidth}px - 100%))` : ""};
     }
   }
@@ -92,8 +94,10 @@ export default function MarqueeDescription({
   const { textRef, onRefChange } = useUpdatedTextRef();
 
   return (
+    // @ts-ignore
     <ItemContainer containerWidth={containerWidth}>
       <ItemWrapper
+          // @ts-ignore
         containerWidth={containerWidth}
         transitionDuration={getTransitionDuration(textRef)}
         shouldTranslate={getShouldTranslate({ textRef, containerWidth })}
