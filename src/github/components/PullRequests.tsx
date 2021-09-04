@@ -5,11 +5,45 @@ import MarqueeDescription from "../../components/MarqueeDescription";
 import { fetcher } from "../utils/fetcher";
 import merged from "../assets/github/merged.png";
 import pr from "../assets/github/pr.png";
-import styles from "./pullrequests.module.scss";
+import styled from "styled-components";
 import useSWR from "swr";
 
 type listUserPullRequestsResponse =
   Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"];
+
+const PullRequestsContainer = styled.div`
+  width: 430px;
+  box-shadow: 8px 8px 5px #f9a1a1;
+  border-radius: 5px;
+  height: 100%;
+  margin-top: 25px;
+  margin-left: 25px;
+`;
+
+const Title = styled.h1`
+  font-weight: bold;
+  display: block;
+  font-size: 12px;
+  font-family: monospace;
+  text-align: center;
+  padding: 5px;
+  background-color: #dedede;
+  margin: 0 auto;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+`;
+
+const Content = styled.div`
+  background-color: #151515;
+  padding: 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+`;
+
+const ContentContainer = styled.a`
+  display: flex;
+  align-items: center;
+`;
 
 export default function PullRequests() {
   const { data, error } = useSWR<{ items: listUserPullRequestsResponse }>(
@@ -21,14 +55,14 @@ export default function PullRequests() {
   if (!data) return <p>Loading...</p>;
 
   return (
-    <div className={styles.PullRequests}>
-      <Link href="https://github.com/thibautsabot?tab=repositories">
-        <a className={styles.title}>Pull Requests</a>
+    <PullRequestsContainer>
+      <Link passHref href="https://github.com/thibautsabot?tab=repositories">
+        <Title>Pull Requests</Title>
       </Link>
-      <div className={styles.content}>
+      <Content>
         {data.items.map((pullRequest) => (
-          <Link key={pullRequest.id} href={pullRequest.html_url}>
-            <a className={styles.container}>
+          <Link passHref key={pullRequest.id} href={pullRequest.html_url}>
+            <ContentContainer>
               {pullRequest.state === "closed" ? (
                 <Image width={24} height={24} src={merged} alt="merged" />
               ) : (
@@ -37,10 +71,10 @@ export default function PullRequests() {
               <MarqueeDescription containerWidth={400}>
                 {pullRequest.title}
               </MarqueeDescription>
-            </a>
+            </ContentContainer>
           </Link>
         ))}
-      </div>
-    </div>
+      </Content>
+    </PullRequestsContainer>
   );
 }
