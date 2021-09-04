@@ -8,11 +8,39 @@ import {
 
 import { Endpoints } from "@octokit/types";
 import { fetcher } from "../utils/fetcher";
-import styles from "./activity.module.scss";
+import styled from "styled-components";
 import useSWR from "swr";
 
 type listUserReposResponse =
   Endpoints["GET /users/{username}/events"]["response"]["data"];
+
+const RecentActivityContainer = styled.div`
+  width: 430px;
+  box-shadow: 8px 8px 5px #a1b0f9;
+  border-radius: 5px;
+  height: 100%;
+  margin-top: 25px;
+  margin-left: 25px;
+`;
+
+const Title = styled.h1`
+  font-size: 12px;
+  font-family: monospace;
+  margin: 0;
+  text-align: center;
+  padding: 5px;
+  background-color: #dedede;
+  margin: 0 auto;
+  border-top-right-radius: 5px;
+  border-top-left-radius: 5px;
+`;
+
+const Content = styled.div`
+  background-color: #151515;
+  padding: 20px;
+  border-bottom-left-radius: 5px;
+  border-bottom-right-radius: 5px;
+`;
 
 export default function RecentActivity() {
   const { data, error } = useSWR<listUserReposResponse>(
@@ -34,9 +62,9 @@ export default function RecentActivity() {
   if (!data) return <p>Loading...</p>;
 
   return (
-    <div className={styles.RecentActivity}>
-      <h1 className={styles.title}>Recent activity</h1>
-      <div className={styles.content}>
+    <RecentActivityContainer>
+      <Title>Recent activity</Title>
+      <Content>
         {data
           .filter((event) => desiredEvents.includes(event.type))
           .map((event) => {
@@ -55,7 +83,7 @@ export default function RecentActivity() {
                 return null;
             }
           })}
-      </div>
-    </div>
+      </Content>
+    </RecentActivityContainer>
   );
 }
