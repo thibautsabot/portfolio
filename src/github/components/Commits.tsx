@@ -2,7 +2,7 @@ import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
 import RepositoryIcon from "./RepositoryIcon";
 import { fetcher } from "../utils/fetcher";
-import styled from '@emotion/styled'
+import { styled } from 'linaria/react'
 import useSWR from "swr";
 
 const getCommitMessage = (commit) => commit?.payload?.commits[0]?.message;

@@ -1,6 +1,6 @@
 import { useCallback, useState } from "react";
 
-import styled from '@emotion/styled'
+import { styled } from 'linaria/react'
 
 const ItemContainer = styled.p`
   width: 80%;
@@ -81,7 +81,6 @@ function getShouldTranslate({
 }) {
   return textRef?.getBoundingClientRect().width > containerWidth;
 }
-
 interface Props {
   children: React.ReactNode;
   containerWidth: number;

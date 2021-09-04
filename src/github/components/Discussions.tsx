@@ -2,7 +2,7 @@ import { DiscussionCommentEdge } from "@octokit/graphql-schema";
 import Image from "next/image";
 import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
-import styled from '@emotion/styled'
+import { styled } from 'linaria/react'
 import upvote from "../assets/upvote.png";
 
 interface Props {

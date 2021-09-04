@@ -8,7 +8,7 @@ import {
 
 import { Endpoints } from "@octokit/types";
 import { fetcher } from "../utils/fetcher";
-import styled from '@emotion/styled'
+import { styled } from 'linaria/react'
 import useSWR from "swr";
 
 type listUserReposResponse =
