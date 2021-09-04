@@ -6,7 +6,7 @@ import PullRequests from "../src/github/components/PullRequests";
 import RecentActivity from "../src/github/components/RecentActivity";
 import Repositories from "../src/github/components/Repositories";
 import getDiscussions from "../src/github/utils/getDiscussions";
-import styled from "styled-components";
+import { styled } from 'linaria/react'
 interface Props {
   discussions: DiscussionCommentEdge[];
 }

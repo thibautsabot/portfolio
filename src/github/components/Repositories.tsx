@@ -3,7 +3,7 @@ import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
 import RepositoryIcon from "./RepositoryIcon";
 import { fetcher } from "../utils/fetcher";
-import styled from "styled-components";
+import { styled } from 'linaria/react'
 import useSWR from "swr";
 
 type listUserReposResponse =

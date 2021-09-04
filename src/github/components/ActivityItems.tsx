@@ -5,7 +5,7 @@ import branch from "../assets/github/branch.png";
 import fork from "../assets/github/fork.png";
 import release from "../assets/github/release.png";
 import star from "../assets/github/star.png";
-import styled from "styled-components";
+import { styled } from 'linaria/react'
 import unlock from "../assets/github/unlock.png";
 
 const ItemLink = styled.a`
