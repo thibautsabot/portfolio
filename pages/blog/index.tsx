@@ -1,10 +1,11 @@
+import { ReactElement } from "react";
 import getBlogPosts from "../../utils/getBlogPosts";
 
-interface Props { 
-  posts: string[]
+interface Props {
+  posts: string[];
 }
 
-export default function Blog({ posts }: Props) {
+export default function Blog({ posts }: Props): ReactElement {
   return (
     <div>
       {posts.map((post, i) => {
@@ -15,7 +16,11 @@ export default function Blog({ posts }: Props) {
 }
 
 // Get the 5 first post
-export async function getStaticProps() {
+export async function getStaticProps(): Promise<{
+  props: {
+    posts: string[];
+  };
+}> {
   const posts = getBlogPosts({ limit: 5 });
 
   return {

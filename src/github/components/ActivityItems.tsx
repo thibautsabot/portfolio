@@ -14,6 +14,8 @@ const ItemLink = styled.a`
   align-items: center;
 `
 
+// TODO: Try to find up-to-date GitHub types instead of `any` and / or handle potential errors.
+
 function ForkItem({ event }: { event: any }): ReactElement {
   return (
     <Link passHref href={event.payload.forkee.html_url}>

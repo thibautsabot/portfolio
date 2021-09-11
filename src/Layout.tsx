@@ -1,20 +1,23 @@
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
-
+import Image from "next/image";
 import { useState, ReactElement } from "react";
+import moon from "../assets/moon.webp";
+import sun from "../assets/sun.png";
 
 const ChangeThemeButton = styled.button`
   color: ${(props): string => props.theme.color};
-  border: 2px solid ${(props): string => props.theme.color};
-  background: ${(props): string => props.theme.background};
-
+  background: transparent;
   font-size: 1em;
   margin: 1em;
-  padding: 0.25em 1em;
-  border-radius: 3px;
   cursor: pointer;
+  display: flex;
+  justify-content: end;
+  width: 100%;
+  border: none;
+  padding-right: 50px;
 `;
 
-export const darkTheme  = {
+export const darkTheme = {
   color: "white",
   background: "#151515",
   body: "#353535",
@@ -49,7 +52,7 @@ interface Props {
   children: React.ReactNode;
 }
 
-export default function Layout({ children }:Props): ReactElement {
+export default function Layout({ children }: Props): ReactElement {
   const [appTheme, setAppTheme] = useState("dark");
   const toggleTheme = (): void =>
     setAppTheme(appTheme === "light" ? "dark" : "light");
@@ -57,7 +60,15 @@ export default function Layout({ children }:Props): ReactElement {
   return (
     <ThemeProvider theme={appTheme === "light" ? lightTheme : darkTheme}>
       <GlobalStyles />
-      <ChangeThemeButton onClick={toggleTheme}>THEME</ChangeThemeButton>
+      <ChangeThemeButton onClick={toggleTheme}>
+        <Image
+          alt="change theme"
+          src={appTheme === "light" ? sun : moon}
+          layout="fixed"
+          width={50}
+          height={50}
+        />
+      </ChangeThemeButton>
       {children}
     </ThemeProvider>
   );
