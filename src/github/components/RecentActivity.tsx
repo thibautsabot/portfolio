@@ -5,7 +5,7 @@ import {
   ReleaseItem,
   WatchItem,
 } from "./ActivityItems";
-
+import { BlockContainer, Title, Content } from './Container'
 import { Endpoints } from "@octokit/types";
 import { fetcher } from "../utils/fetcher";
 import styled from "styled-components";
@@ -14,32 +14,8 @@ import useSWR from "swr";
 type listUserReposResponse =
   Endpoints["GET /users/{username}/events"]["response"]["data"];
 
-const RecentActivityContainer = styled.div`
-  width: 430px;
+const RecentActivityContainer = styled(BlockContainer)`
   box-shadow: 8px 8px 5px #a1b0f9;
-  border-radius: 5px;
-  height: 100%;
-  margin-top: 25px;
-  margin-left: 25px;
-`;
-
-const Title = styled.h1`
-  font-size: 12px;
-  font-family: monospace;
-  margin: 0;
-  text-align: center;
-  padding: 5px;
-  background-color: #dedede;
-  margin: 0 auto;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-`;
-
-const Content = styled.div`
-  background-color: ${(props) => props.theme.background};
-  padding: 20px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
 `;
 
 export default function RecentActivity() {

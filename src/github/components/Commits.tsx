@@ -3,6 +3,7 @@ import MarqueeDescription from "../../components/MarqueeDescription";
 import RepositoryIcon from "./RepositoryIcon";
 import { fetcher } from "../utils/fetcher";
 import styled from "styled-components";
+import { BlockContainer, Content, ContentContainer, Title } from './Container'
 import useSWR from "swr";
 
 const getCommitMessage = (commit) => commit?.payload?.commits[0]?.message;
@@ -24,39 +25,8 @@ const getUniqCommits = (events = []) => {
   return uniqCommits;
 };
 
-const CommitsContainer = styled.div`
-  width: 430px;
+const CommitsContainer = styled(BlockContainer)`
   box-shadow: 8px 8px 5px #f9d6a1;
-  border-radius: 5px;
-  height: 100%;
-  margin-top: 25px;
-  margin-left: 25px;
-`;
-
-const Title = styled.h1`
-  font-weight: bold;
-  display: block;
-  font-size: 12px;
-  font-family: monospace;
-  margin: 0;
-  text-align: center;
-  padding: 5px;
-  background-color: #dedede;
-  margin: 0 auto;
-  border-top-right-radius: 5px;
-  border-top-left-radius: 5px;
-`;
-
-const Content = styled.div`
-  background-color: ${(props) => props.theme.background};
-  padding: 20px;
-  border-bottom-left-radius: 5px;
-  border-bottom-right-radius: 5px;
-`;
-
-const ContentContainer = styled.a`
-  display: flex;
-  align-items: center;
 `;
 
 export default function Commits() {
@@ -82,7 +52,7 @@ export default function Commits() {
               <RepositoryIcon
                 name={commit.repo.name.replace("thibautsabot/", "")}
               />
-              <MarqueeDescription containerWidth={400}>
+              <MarqueeDescription>
                 {getCommitMessage(commit)}
               </MarqueeDescription>
             </ContentContainer>

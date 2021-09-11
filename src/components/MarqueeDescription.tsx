@@ -1,9 +1,8 @@
 import { useCallback, useState } from "react";
-
+import useWindowSize from "../../utils/useWindowsSize";
 import styled from "styled-components";
 
-const ItemContainer = styled.p`
-  width: 80%;
+const ItemContainer = styled.div`
   height: 50px;
   margin: 0;
   padding-left: 5px;
@@ -11,34 +10,28 @@ const ItemContainer = styled.p`
   color: ${(props) => props.theme.color};
   display: flex;
   align-items: center;
+  transition: 0s;
 
   @media (min-width: 960px) {
-    width: ${(props) => props.containerWidth}px;
     height: 30px;
   }
 `;
 
 const ItemWrapper = styled.span`
-  width: 80%;
   height: 50px;
   display: flex;
-  transition: ${(props) => props.transitionDuration};
 
   @media (min-width: 960px) {
-    width: ${(props) => props.containerWidth}px;
     height: 30px;
   }
 
   &:hover {
+    // transition: ${(props) => props.transitionDuration} linear;
+    transition: 1s linear;
     width: auto;
 
     transform: ${(props) =>
-      props.shouldTranslate ? "translateX(calc(80% - 100%))" : ""};
-
-    @media (min-width: 960px) {
-      transform: ${(props) =>
-        props.shouldTranslate ? `translateX(calc(${props.containerWidth}px - 100%))` : ""};
-    }
+      props.shouldTranslate ? `translateX(calc(${props.translateWidth}))` : ""};
   }
 `;
 
@@ -70,37 +63,39 @@ function getTransitionDuration(textRef: HTMLElement) {
   return textRef?.getBoundingClientRect().width / 180 + "s";
 }
 
-function getShouldTranslate({
-  textRef,
-  containerWidth,
-}: {
-  textRef: HTMLElement;
-  containerWidth: number;
-}) {
-  return textRef?.getBoundingClientRect().width > containerWidth;
+function getTranslateWidth(textRef: HTMLElement) {
+  return (
+    -textRef?.getBoundingClientRect().width -
+    5 +
+    textRef?.parentElement?.getBoundingClientRect().width +
+    "px"
+  );
+}
+
+function getShouldTranslate(textRef: HTMLElement) {
+  return (
+    textRef?.getBoundingClientRect().width >
+    textRef?.parentElement?.getBoundingClientRect().width
+  );
 }
 
 interface Props {
   children: React.ReactNode;
-  containerWidth: number;
 }
 
-export default function MarqueeDescription({
-  children,
-  containerWidth,
-}: Props) {
+export default function MarqueeDescription({ children }: Props) {
   const { textRef, onRefChange } = useUpdatedTextRef();
+  useWindowSize(); // Update component on resize
 
   return (
-    <ItemContainer containerWidth={containerWidth}>
+    <ItemContainer>
       <ItemWrapper
-        containerWidth={containerWidth}
+        ref={onRefChange}
+        translateWidth={getTranslateWidth(textRef)}
         transitionDuration={getTransitionDuration(textRef)}
-        shouldTranslate={getShouldTranslate({ textRef, containerWidth })}
+        shouldTranslate={getShouldTranslate(textRef)}
       >
-        <ItemContent ref={onRefChange}>
-          {children}
-        </ItemContent>
+        <ItemContent>{children}</ItemContent>
       </ItemWrapper>
     </ItemContainer>
   );

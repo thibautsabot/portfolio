@@ -45,6 +45,7 @@ const repositoryImage = {
 export default function RepositoryIcon({ name }) {
   return (
     <Image
+      layout="fixed"
       alt={`${name} icon`}
       src={repositoryImage[name] || repositoryImage["fallback"]}
       width={24}

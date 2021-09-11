@@ -9,17 +9,17 @@ import styled from "styled-components";
 import unlock from "../assets/github/unlock.png";
 
 const ItemLink = styled.a`
-display: flex;
-align-items: center;
+  display: flex;
+  align-items: center;
 `
 
 function ForkItem({ event }) {
   return (
     <Link passHref href={event.payload.forkee.html_url}>
       <ItemLink>
-        <Image width={24} height={24} alt="fork" src={fork} />
-        <MarqueeDescription containerWidth={400}>
-          New fork of <code>{event.repo.name}</code> - &quot;
+        <Image layout="fixed" width={24} height={24} alt="fork" src={fork} />
+        <MarqueeDescription>
+          New fork of&nbsp;<code>{event.repo.name}</code>&nbsp;- &quot;
           {event.payload.forkee.description}&quot;
         </MarqueeDescription>
       </ItemLink>
@@ -31,9 +31,9 @@ function PublicItem({ event }) {
   return (
     <Link passHref href={"https://github.com/" + event.repo.name}>
       <ItemLink>
-        <Image width={24} height={24} alt="unlock" src={unlock} />
-        <MarqueeDescription containerWidth={400}>
-          <code>{event.repo.name}</code> was just made public!
+        <Image layout="fixed" width={24} height={24} alt="unlock" src={unlock} />
+        <MarqueeDescription>
+          <code>{event.repo.name}</code>&nbsp;was just made public!
         </MarqueeDescription>
       </ItemLink>
     </Link>
@@ -44,9 +44,9 @@ function WatchItem({ event }) {
   return (
     <Link passHref href={"https://github.com/" + event.repo.name}>
       <ItemLink>
-        <Image width={24} height={24} alt="star" src={star} />
-        <MarqueeDescription containerWidth={400}>
-          <code>{event.repo.name}</code> is a new starred repository!
+        <Image layout="fixed" width={24} height={24} alt="star" src={star} />
+        <MarqueeDescription>
+          <code>{event.repo.name}</code>&nbsp;is a new starred repository!
         </MarqueeDescription>
       </ItemLink>
     </Link>
@@ -63,9 +63,9 @@ function CreateItem({ event }) {
         href={`https://github.com/${event.repo.name}/tree/${event.payload.ref}`}
       >
         <ItemLink>
-          <Image width={24} height={24} alt="branch" src={branch} />
-          <MarqueeDescription containerWidth={400}>
-            The <code>{event.payload.ref}</code> branch was created on{" "}
+          <Image layout="fixed"  width={24} height={24} alt="branch" src={branch} />
+          <MarqueeDescription>
+            The&nbsp;<code>{event.payload.ref}</code>&nbsp;branch was created on{" "}
             <code>{event.repo.name}</code>.
           </MarqueeDescription>
         </ItemLink>
@@ -80,8 +80,8 @@ function ReleaseItem({ event }) {
   return (
     <Link passHref href={event.payload.release.html_url}>
       <ItemLink>
-        <Image width={24} height={24} alt="release" src={release} />
-        <MarqueeDescription containerWidth={400}>
+        <Image layout="fixed" width={24} height={24} alt="release" src={release} />
+        <MarqueeDescription>
           New release  <code>{event.payload.release.body}</code> on{" "}
           <code>{event.repo.name}</code>!
         </MarqueeDescription>
