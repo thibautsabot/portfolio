@@ -1,11 +1,11 @@
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 
-import { useState } from "react";
+import { useState, ReactElement } from "react";
 
 const ChangeThemeButton = styled.button`
-  color: ${(props) => props.theme.color};
-  border: 2px solid ${(props) => props.theme.color};
-  background: ${(props) => props.theme.background};
+  color: ${(props): string => props.theme.color};
+  border: 2px solid ${(props): string => props.theme.color};
+  background: ${(props): string => props.theme.background};
 
   font-size: 1em;
   margin: 1em;
@@ -14,7 +14,7 @@ const ChangeThemeButton = styled.button`
   cursor: pointer;
 `;
 
-export const darkTheme = {
+export const darkTheme  = {
   color: "white",
   background: "#151515",
   body: "#353535",
@@ -28,7 +28,7 @@ export const lightTheme = {
 
 export const GlobalStyles = createGlobalStyle`
   body {
-    background: ${({ theme }) => theme.body};
+    background: ${({ theme }): string => theme.body};
     padding: 0;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -45,9 +45,13 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
-export default function Layout({ children }) {
+interface Props {
+  children: React.ReactNode;
+}
+
+export default function Layout({ children }:Props): ReactElement {
   const [appTheme, setAppTheme] = useState("dark");
-  const toggleTheme = () =>
+  const toggleTheme = (): void =>
     setAppTheme(appTheme === "light" ? "dark" : "light");
 
   return (

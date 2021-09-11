@@ -3,7 +3,7 @@ interface ResponseError extends Error {
   info?: any;
 }
 
-const fetcher = async (url) => {
+const fetcher = async (url: string): Promise<any> => {
   const res = await fetch("https://api.github.com/" + url, {
     ...(process.env.NEXT_PUBLIC_DEV_GITHUB_TOKEN && {
       // This token is only in .env.local and should not be set in the Vercel panel.

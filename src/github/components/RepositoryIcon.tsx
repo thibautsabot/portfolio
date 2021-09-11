@@ -15,8 +15,9 @@ import franz from "../assets/repository/franz.png";
 import react from "../assets/repository/react.png";
 import smartthings from "../assets/repository/smartthings.jpg";
 import tools from "../assets/repository/tools.png";
+import { ReactElement } from 'react'
 
-const repositoryImage = {
+const repositoryImage: { [key: string]: StaticImageData } = {
   fallback: fallback,
   "chess-scrapper": chess,
   "banane-plantee": bananeplantee,
@@ -42,7 +43,7 @@ const repositoryImage = {
   LePointRssFeed: android,
 };
 
-export default function RepositoryIcon({ name }) {
+export default function RepositoryIcon({ name }: { name: string }): ReactElement {
   return (
     <Image
       layout="fixed"

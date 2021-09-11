@@ -7,13 +7,14 @@ import release from "../assets/github/release.png";
 import star from "../assets/github/star.png";
 import styled from "styled-components";
 import unlock from "../assets/github/unlock.png";
+import { ReactElement } from 'react'
 
 const ItemLink = styled.a`
   display: flex;
   align-items: center;
 `
 
-function ForkItem({ event }) {
+function ForkItem({ event }: { event: any }): ReactElement {
   return (
     <Link passHref href={event.payload.forkee.html_url}>
       <ItemLink>
@@ -27,7 +28,7 @@ function ForkItem({ event }) {
   );
 }
 
-function PublicItem({ event }) {
+function PublicItem({ event }: { event: any }): ReactElement {
   return (
     <Link passHref href={"https://github.com/" + event.repo.name}>
       <ItemLink>
@@ -40,7 +41,7 @@ function PublicItem({ event }) {
   );
 }
 
-function WatchItem({ event }) {
+function WatchItem({ event }: { event: any }): ReactElement {
   return (
     <Link passHref href={"https://github.com/" + event.repo.name}>
       <ItemLink>
@@ -53,7 +54,7 @@ function WatchItem({ event }) {
   );
 }
 
-function CreateItem({ event }) {
+function CreateItem({ event }: { event: any }): ReactElement | null {
   if (event.payload.ref_type === "branch") {
     // if (event.payload.ref.indexOf("cms/blog") !== -1) return null;
 
@@ -76,7 +77,7 @@ function CreateItem({ event }) {
   }
 }
 
-function ReleaseItem({ event }) {
+function ReleaseItem({ event }: { event: any }): ReactElement {
   return (
     <Link passHref href={event.payload.release.html_url}>
       <ItemLink>

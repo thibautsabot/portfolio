@@ -5,16 +5,17 @@ import { fetcher } from "../utils/fetcher";
 import styled from "styled-components";
 import { BlockContainer, Content, ContentContainer, Title } from './Container'
 import useSWR from "swr";
+import { ReactElement } from 'react'
 
-const getCommitMessage = (commit) => commit?.payload?.commits[0]?.message;
-const getCommitHash = (commit) => commit?.payload?.commits[0]?.sha;
+const getCommitMessage = (commit: any): string | undefined => commit?.payload?.commits[0]?.message;
+const getCommitHash = (commit: any): string | undefined => commit?.payload?.commits[0]?.sha;
 
-const getUniqCommits = (events = []) => {
-  const commits = events.filter((event) => event.type === "PushEvent");
+const getUniqCommits = (events: any[] = []): any[] => {
+  const commits = events.filter((event) => event?.type === "PushEvent");
 
   const uniqCommits = commits.reduce((acc, commit) => {
     if (
-      !acc.some((elem) => getCommitMessage(elem) === getCommitMessage(commit))
+      !acc.some((elem: any) => getCommitMessage(elem) === getCommitMessage(commit))
     ) {
       // If the current commit is not in the acc yet, push it.
       acc.push(commit);
@@ -29,7 +30,7 @@ const CommitsContainer = styled(BlockContainer)`
   box-shadow: 8px 8px 5px #f9d6a1;
 `;
 
-export default function Commits() {
+export default function Commits(): ReactElement {
   // use `any` as the octokit types are invalid for events...
   const { data, error } = useSWR<any>("users/thibautsabot/events", fetcher);
 
@@ -43,14 +44,14 @@ export default function Commits() {
         {getUniqCommits(data).map((commit) => (
           <Link
             passHref
-            key={commit.id}
+            key={commit?.id}
             href={`https://github.com/${
-              commit.repo.name
+              commit?.repo?.name
             }/commit/${getCommitHash(commit)}`}
           >
             <ContentContainer>
               <RepositoryIcon
-                name={commit.repo.name.replace("thibautsabot/", "")}
+                name={commit?.repo?.name.replace("thibautsabot/", "")}
               />
               <MarqueeDescription>
                 {getCommitMessage(commit)}

@@ -10,6 +10,7 @@ import { Endpoints } from "@octokit/types";
 import { fetcher } from "../utils/fetcher";
 import styled from "styled-components";
 import useSWR from "swr";
+import { ReactElement } from 'react'
 
 type listUserReposResponse =
   Endpoints["GET /users/{username}/events"]["response"]["data"];
@@ -18,7 +19,7 @@ const RecentActivityContainer = styled(BlockContainer)`
   box-shadow: 8px 8px 5px #a1b0f9;
 `;
 
-export default function RecentActivity() {
+export default function RecentActivity(): ReactElement {
   const { data, error } = useSWR<listUserReposResponse>(
     "users/thibautsabot/events",
     fetcher
@@ -42,7 +43,7 @@ export default function RecentActivity() {
       <Title>Recent activity</Title>
       <Content>
         {data
-          .filter((event) => desiredEvents.includes(event.type))
+          .filter((event) => event.type && desiredEvents.includes(event.type))
           .map((event) => {
             switch (event.type) {
               case "ForkEvent":

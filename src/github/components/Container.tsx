@@ -29,7 +29,7 @@ const Title = styled.h1`
 `;
 
 const Content = styled.div`
-  background-color: ${(props) => props.theme.background};
+  background-color: ${(props): string => props.theme.background};
   padding: 20px 10px;
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;

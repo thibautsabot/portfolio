@@ -2,12 +2,14 @@ import Head from "next/head";
 import Image from "next/image";
 import getDiscussions from "../src/github/utils/getDiscussions";
 import { DiscussionCommentEdge } from "@octokit/graphql-schema";
+import { ReactElement } from "react";
+import { User } from "@octokit/graphql-schema";
 
 interface Props {
   discussions: DiscussionCommentEdge[];
 }
 
-export default function Home({ discussions }: Props) {
+export default function Home({ discussions }: Props): ReactElement {
   return (
     <div>
       <Head>
@@ -20,7 +22,7 @@ export default function Home({ discussions }: Props) {
         <h1>Welcome to my personal website</h1>
 
         {discussions.map(({ node }) => (
-          <p key={node.createdAt}>{node.bodyText}</p>
+          <p key={node?.createdAt}>{node?.bodyText}</p>
         ))}
       </main>
 
@@ -36,7 +38,10 @@ export default function Home({ discussions }: Props) {
   );
 }
 
-export async function getStaticProps() {
+export async function getStaticProps(): Promise<{
+  props: { discussions: User["repositoryDiscussionComments"]["edges"] };
+  revalidate: number;
+}> {
   const discussions = await getDiscussions();
 
   return {

@@ -6,6 +6,7 @@ import { fetcher } from "../utils/fetcher";
 import styled from "styled-components";
 import useSWR from "swr";
 import { BlockContainer, Content, ContentContainer, Title } from './Container'
+import { ReactElement } from 'react'
 
 type listUserReposResponse =
   Endpoints["GET /users/{username}/repos"]["response"]["data"];
@@ -14,7 +15,7 @@ const RepositoriesContainer = styled(BlockContainer)`
   box-shadow: 8px 8px 5px #a1f9c8;
 `;
 
-export default function Repositories() {
+export default function Repositories(): ReactElement {
   const { data, error } = useSWR<listUserReposResponse>(
     "users/thibautsabot/repos?sort=pushed&type=public",
     fetcher

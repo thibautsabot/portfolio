@@ -1,7 +1,7 @@
 import { graphql as gitHubGraphql } from "@octokit/graphql";
 import { User } from "@octokit/graphql-schema";
 
-export default async function getDiscussions() {
+export default async function getDiscussions(): Promise<User['repositoryDiscussionComments']['edges']> {
   const graphqlWithAuth = gitHubGraphql.defaults({
     headers: {
       authorization: `bearer ${process.env.GITHUB_TOKEN}`,

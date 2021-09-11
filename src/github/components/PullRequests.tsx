@@ -7,6 +7,7 @@ import merged from "../assets/github/merged.png";
 import pr from "../assets/github/pr.png";
 import styled from "styled-components";
 import useSWR from "swr";
+import { ReactElement } from 'react'
 import { BlockContainer, Content, ContentContainer, Title } from './Container'
 
 type listUserPullRequestsResponse =
@@ -16,7 +17,7 @@ const PullRequestsContainer = styled(BlockContainer)`
   box-shadow: 8px 8px 5px #f9a1a1;
 `;
 
-export default function PullRequests() {
+export default function PullRequests(): ReactElement {
   const { data, error } = useSWR<{ items: listUserPullRequestsResponse }>(
     "search/issues?q=is:pr+author:thibautsabot+NOT+Blog&sort=created&per_page=10",
     fetcher

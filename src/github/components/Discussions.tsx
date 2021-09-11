@@ -5,6 +5,7 @@ import MarqueeDescription from "../../components/MarqueeDescription";
 import styled from "styled-components";
 import upvote from "../assets/upvote.png";
 import { BlockContainer, Content, Title } from './Container'
+import { ReactElement } from 'react'
 
 interface Props {
   discussions: DiscussionCommentEdge[];
@@ -42,19 +43,19 @@ const MarqueeContainer = styled.a`
   width: 95%;
 `
 
-export default function Discussions({ discussions }: Props) {
+export default function Discussions({ discussions }: Props): ReactElement {
   return (
     <DiscussionsContainer>
       <Title>Discussions</Title>
       <Content>
         {discussions.map(({ node }) => (
-          <ContentContainer key={node.id}>
+          <ContentContainer key={node?.id}>
             <Image layout="fixed" src={upvote} width={18} height={30} alt="upvotes" />
-            <Upvotes>{node.upvoteCount}</Upvotes>
-            <Link passHref href={node.url}>
+            <Upvotes>{node?.upvoteCount}</Upvotes>
+            <Link passHref href={node?.url}>
               <MarqueeContainer>
                 <MarqueeDescription>
-                  [{node.discussion.repository.name}] - {node.bodyText}
+                  [{node?.discussion?.repository?.name}] - {node?.bodyText}
                 </MarqueeDescription>
               </MarqueeContainer>
             </Link>
