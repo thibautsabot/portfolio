@@ -8,7 +8,7 @@ const ItemContainer = styled.p`
   margin: 0;
   padding-left: 5px;
   overflow: hidden;
-  color: white;
+  color: ${(props) => props.theme.color};
   display: flex;
   align-items: center;
 

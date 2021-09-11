@@ -32,7 +32,7 @@ const Title = styled.h1`
 `;
 
 const Content = styled.div`
-  background-color: #151515;
+  background-color: ${(props) => props.theme.background};
   border-bottom-left-radius: 5px;
   border-bottom-right-radius: 5px;
 `;
