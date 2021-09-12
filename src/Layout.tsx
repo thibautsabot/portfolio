@@ -8,7 +8,7 @@ const ChangeThemeButton = styled.button`
   color: ${(props): string => props.theme.color};
   background: transparent;
   font-size: 1em;
-  margin: 1em;
+  margin: 1em 0;
   cursor: pointer;
   display: flex;
   justify-content: end;
@@ -19,12 +19,15 @@ const ChangeThemeButton = styled.button`
 
 export const darkTheme = {
   color: "white",
+  subColor: "grey",
   background: "#151515",
-  body: "#353535",
+  // body: "#353535",
+  body: "black"
 };
 
 export const lightTheme = {
   color: "black",
+  subColor: "grey",
   background: "#ffcbcb",
   body: "white",
 };
