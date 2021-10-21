@@ -70,22 +70,22 @@ export async function getServerSideProps(): Promise<{
           user.id === tweet.entities?.mentions?.[0].id
       ) || me;
 
-    const fullText =
+    const fullInfos =
       tweets.includes?.tweets?.find(
         (extendedTweet) =>
           tweet.referenced_tweets?.[0].type === "retweeted" &&
           extendedTweet.id === tweet?.referenced_tweets?.[0]?.id
-      )?.text || tweet.text;
+      ) || tweet;
 
     return {
       id: tweet.id,
-      text: fullText,
+      text: fullInfos.text,
       verified: author?.verified ?? null,
       authorName: author?.name ?? null,
       authorHandle: author?.username ?? null,
-      likeCount: tweet.public_metrics?.like_count ?? 0,
-      retweetCount: tweet.public_metrics?.retweet_count ?? 0,
-      replyCount: tweet.public_metrics?.reply_count ?? 0,
+      likeCount: fullInfos.public_metrics?.like_count ?? 0,
+      retweetCount: fullInfos.public_metrics?.retweet_count ?? 0,
+      replyCount: fullInfos.public_metrics?.reply_count ?? 0,
       date: tweet.created_at ?? "",
       profilePictureUrl: author?.profile_image_url ?? "",
       authorDesc: author?.description ?? ''
