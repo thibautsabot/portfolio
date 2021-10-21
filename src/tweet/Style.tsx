@@ -1,5 +1,3 @@
-import Image from "next/image";
-import Like from "./assets/like.svg";
 import styled from "styled-components";
 
 export const TweetContainer = styled.div`

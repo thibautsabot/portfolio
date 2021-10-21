@@ -1,28 +1,29 @@
-import { Tweet as TweetType } from "../../pages/twitter";
-import { ReactElement, useContext } from "react";
-import Reply from "./assets/reply.svg";
-import Retweet from "./assets/retweet.svg";
-import Like from "./assets/like.svg";
-import Verified from "./assets/verified.svg";
-import Image from "next/image";
-import twitter from "./assets/twitter.png";
-import twitterAnimated from "./assets/twitterAnimated.gif";
-import { ThemeContext } from "styled-components";
 import {
-  TweetContainer,
-  Header,
-  ProfilePicture,
-  NamesContainer,
-  Name,
+  AnimatedTwitterIcon,
+  Footer,
   Handle,
+  Header,
   Intent,
   Intents,
-  Footer,
+  Name,
+  NamesContainer,
+  ProfilePicture,
   Text,
+  TweetContainer,
   TwitterIcon,
-  AnimatedTwitterIcon,
   TwitterIconContainer,
 } from "./Style";
+import { ReactElement, useContext } from "react";
+
+import Image from "next/image";
+import Like from "./assets/like.svg";
+import Reply from "./assets/reply.svg";
+import Retweet from "./assets/retweet.svg";
+import { ThemeContext } from "styled-components";
+import { Tweet as TweetType } from "../../pages/twitter";
+import Verified from "./assets/verified.svg";
+import twitter from "./assets/twitter.png";
+import twitterAnimated from "./assets/twitterAnimated.gif";
 
 function formatDate(date: string): string {
   return new Intl.DateTimeFormat("en-US", {
@@ -65,7 +66,8 @@ export default function Tweet({
           </Name>
           <Handle>@{authorHandle}</Handle>
         </NamesContainer>
-        <TwitterIconContainer
+      </Header>
+      <TwitterIconContainer
           href={`https://twitter.com/${authorHandle}/status/${id}`}
         >
           <TwitterIcon>
@@ -88,7 +90,6 @@ export default function Tweet({
             />
           </AnimatedTwitterIcon>
         </TwitterIconContainer>
-      </Header>
       <Text>{text}</Text>
       {date && <Footer>{formatDate(date)}</Footer>}
       <Intents>
