@@ -1,6 +1,6 @@
-import styled from "styled-components";
 import Image from "next/image";
 import Like from "./assets/like.svg";
+import styled from "styled-components";
 
 export const TweetContainer = styled.div`
   border: 1px solid #1f2937;
@@ -64,6 +64,7 @@ export const Intents = styled.div`
 
 export const Intent = styled.a<{ hoverColor: string }>`
   display: flex;
+  align-items: center;
   color: ${(props): string => props.theme.subColor};
 
   :hover {

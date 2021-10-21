@@ -1,6 +1,6 @@
-import getBlogPosts from "../../utils/getBlogPosts";
-import getBlogPostContent from "../../utils/getBlogPostContent";
 import { ReactElement } from "react";
+import getBlogPostContent from "../../utils/getBlogPostContent";
+import getBlogPosts from "../../utils/getBlogPosts";
 
 interface Props {
   content: string;
@@ -29,7 +29,7 @@ export async function getStaticPaths(): Promise<{
   paths: { params: { slug: string } }[];
   fallback: boolean
 }> {
-  const blogPosts = getBlogPosts({ limit: 0 });
+  const blogPosts = getBlogPosts({});
 
   return {
     paths: blogPosts.map((post) => ({

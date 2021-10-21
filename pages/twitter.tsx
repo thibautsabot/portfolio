@@ -1,7 +1,8 @@
+import { Tweetv2TimelineResult, UserV2 } from "twitter-api-v2";
+
 import Head from "next/head";
 import Layout from "../src/Layout";
 import { ReactElement } from "react";
-import { Tweetv2TimelineResult, UserV2 } from "twitter-api-v2";
 import Tweet from "../src/tweet";
 
 export interface Tweet {

@@ -1,7 +1,7 @@
 import fs from "fs";
 import { join } from "path";
 
-export default function getBlogPosts({ limit = 10 }: { limit: number }): string[] {
+export default function getBlogPosts({ limit = 10 }: { limit?: number }): string[] {
     const blogPosts = fs.readdirSync(join(process.cwd(), "posts"));
 
     // TODO: Sort by last date

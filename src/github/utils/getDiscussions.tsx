@@ -1,5 +1,5 @@
-import { graphql as gitHubGraphql } from "@octokit/graphql";
 import { User } from "@octokit/graphql-schema";
+import { graphql as gitHubGraphql } from "@octokit/graphql";
 
 export default async function getDiscussions(): Promise<User['repositoryDiscussionComments']['edges']> {
   const graphqlWithAuth = gitHubGraphql.defaults({
@@ -31,6 +31,7 @@ export default async function getDiscussions(): Promise<User['repositoryDiscussi
           }
         }
       `);
+
 
   return user.repositoryDiscussionComments.edges;
 }
