@@ -1,1 +1,329 @@
-First
+---
+title: Example Post
+description: This is some description
+---
+
+# How we are improving our Web performance
+
+[![leboncoin](https://miro.medium.com/fit/c/96/96/2*QLSGq3mwL45M-6it0EkHRQ.png)](https://medium.com/@_leboncoin?source=post_page-----9f850d59d810--------------------------------)[leboncoin](https://medium.com/@_leboncoin?source=post_page-----9f850d59d810--------------------------------)Follow
+
+[Sep 7](https://medium.com/leboncoin-engineering-blog/how-we-are-improving-our-web-performance-9f850d59d810?source=post_page-----9f850d59d810--------------------------------) · 11 min read
+
+_By_ [_Thibaut Sabot_](https://twitter.com/thibautsabot) _(Lead Frontend Developer)_
+
+![](https://miro.medium.com/max/1400/1*qhugF068vK4uMOs_InDnWg.jpeg)Meeting room at leboncoin’s Paris HQ
+
+It’s no secret that Web performance plays an important role in a website’s success.
+
+You probably heard about the stories of Walmart that increased their conversion rate by 2% for every less second their page would take to load.
+
+That Amazon would lose [1.6 billion dollar in sales](https://www.fastcompany.com/1825005/how-one-second-could-cost-amazon-16-billion-sales) if their pages would load just one second slower.
+
+Or that Zalando noticed a [0.7% increase in sales for every 100ms](https://engineering.zalando.com/posts/2018/06/loading-time-matters.html) chopped off.
+
+While we found a clear correlation between page performances and revenues over the years, the average web page weight keeps growing.
+
+According to [httparchive.org](https://httparchive.org/reports/page-weigh), in only 5 years, the average page weight grew by ~50% (almost 60% on mobile). I’m not even talking about the astonishing 350% increase in 10 years!
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*i-IXeJ7B8\_zsKEky"
+  width="700"
+  height="378"
+  srcSet="https://miro.medium.com/max/552/0\*i-IXeJ7B8\_zsKEky 276w, https://miro.medium.com/max/1104/0\*i-IXeJ7B8\_zsKEky 552w, https://miro.medium.com/max/1280/0\*i-IXeJ7B8\_zsKEky 640w, https://miro.medium.com/max/1400/0\*i-IXeJ7B8\_zsKEky 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+One could argue that the average user network bandwidth and processing power also increased significantly during the last decade but I don’t think it’s fair to say that they both improved by that much.
+
+In fact, in 2017 [the default global baseline is a ~$200 Android device](https://infrequently.org/2021/03/the-performance-inequality-gap/) on a 400Kbps link with a 400ms round-trip-time (“RTT”).
+
+Today still, the [vast majority of shipped smartphones](https://www.statista.com/statistics/934471/smartphone-shipments-by-price-category-worldwide/) are in the low-end or mid-tier category.
+
+At **leboncoin**, we are reaching over [29 million people every month](https://leboncoinpublicite.fr/actualites/audiences-leboncoin-bat-un-nouveau-record/) and we need to make sure that every one of our users can enjoy our website and our apps the best way possible.
+
+Since 2020, we have made a lot of improvements, but we still have a long way to go as Web performance is something that has been discarded from the very beginning.
+
+In this blog post, I’ll share with you the most important changes we made over the past two years.
+
+# How we approach performance
+
+When you ask a user about what they think performance is, they’ll say “_the website should be fast_”. When you ask a developer about what they think performance is, they’ll say “_my code should be fast_”.
+
+While both of these statements are fair and legitimate, they are impossible to measure. What does “_fast_” mean? How can we improve “_fast_”?
+
+To make things easier and to help us improve, we defined a “performance budget”.
+
+A performance budget is a set of limits imposed on **metrics** that affect website performance.
+
+It could be the total size of a page, the time it takes to load on a mobile network, or even the number of HTTP requests that are sent.
+
+It is essential to monitor and define the key metrics of your website, the sooner the better!  
+If you want to know whether your metrics values are improving overtime or not, you have to monitor them from the very beginning.
+
+Although every website is different, and you should take the time to think about what you really need, Google developed a set of metrics called [Web Vitals](https://web.dev/vitals/). Web Vitals is an initiative to provide unified guidance for quality signals that are essential to deliver a great user experience on the web.
+
+It is a great start to measure performances.
+
+To give you a better idea, at leboncoin we are closely monitoring : the [FCP](https://web.dev/first-contentful-paint/), [LCP](https://web.dev/lcp/), [Speed Index](https://web.dev/speed-index/), [TBT](https://web.dev/tbt/), [TTI](https://web.dev/interactive/), [TTFB](https://web.dev/time-to-first-byte/), [CLS](https://web.dev/cls/), JS bundle size, size of our images, global css weight, number of third party scripts, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) size, etc…
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*j938xe\_frdi0bCXg"
+  width="700"
+  height="208"
+  srcSet="https://miro.medium.com/max/552/0\*j938xe\_frdi0bCXg 276w, https://miro.medium.com/max/1104/0\*j938xe\_frdi0bCXg 552w, https://miro.medium.com/max/1280/0\*j938xe\_frdi0bCXg 640w, https://miro.medium.com/max/1400/0\*j938xe\_frdi0bCXg 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+Example of the bundle size evolution over time
+
+It is up to us to monitor these metrics (using the [performance API](https://developer.mozilla.org/en-US/docs/Web/API/Performance), [Lighthouse](https://developers.google.com/web/tools/lighthouse), or [NextJS Vitals](https://nextjs.org/docs/advanced-features/measuring-performance)), but Google also provides the Chrome UX Report ([CrUX](https://developers.google.com/web/tools/chrome-user-experience-report/)). The CrUX is powered by **real** Chrome user measurements across the public web.
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*GocVJkvCF3RLcBX3"
+  width="700"
+  height="428"
+  srcSet="https://miro.medium.com/max/552/0\*GocVJkvCF3RLcBX3 276w, https://miro.medium.com/max/1104/0\*GocVJkvCF3RLcBX3 552w, https://miro.medium.com/max/1280/0\*GocVJkvCF3RLcBX3 640w, https://miro.medium.com/max/1400/0\*GocVJkvCF3RLcBX3 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+LCP evolution graph thanks to CrUX
+
+That is a lot of different information, but contrary to popular belief, performance is not measured by the quality of the code or by the framework you are using.
+
+It is a common misconception to think that performance is just about JavaScript or React, while in fact, it is a combination of multiple factors.
+
+Frontend code plays an important role, but so does the backend and the infrastructure (a lot more than we typically imagine).
+
+**One of our main challenges was to spread the word that performance should be everyone’s business!**
+
+# What we did
+
+## JavaScript
+
+First of all, the biggest change we had to make was to migrate our whole codebase to [NextJS](https://nextjs.org/). If you want to know more about this migration and why we decided to do it, you can read our blog post from last year here : [https://medium.com/leboncoin-engineering-blog/how-we-migrated-our-legacy-frontend-to-nextjs-9c15f4f9182c](https://medium.com/leboncoin-engineering-blog/how-we-migrated-our-legacy-frontend-to-nextjs-9c15f4f9182c)
+
+Once better foundations were set with NextJS, we tried to find the biggest wins.
+
+The first thing we did was to look at our JavaScript bundle. Since this is what each user has to download to interact with a page, we need to include the bare minimum.
+
+In mid-2020 parsing the bundle for the cars listing page ([https://www.leboncoin.fr/voitures/offres](https://www.leboncoin.fr/voitures/offres)) took almost 3s on a Galaxy S7 (against ~1.5s today) :
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*O-WmMvNnvnwqezev"
+  width="700"
+  height="140"
+  srcSet="https://miro.medium.com/max/552/0\*O-WmMvNnvnwqezev 276w, https://miro.medium.com/max/1104/0\*O-WmMvNnvnwqezev 552w, https://miro.medium.com/max/1280/0\*O-WmMvNnvnwqezev 640w, https://miro.medium.com/max/1400/0\*O-WmMvNnvnwqezev 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+There are multiple ways to inspect a bundle. We used a [webpack plugin](https://github.com/webpack-contrib/webpack-bundle-analyzer) that generated an HTML version of our bundle content at build time.
+
+We quickly realized that we had multiple low-hanging fruits to grab.
+
+We had several dependencies that were duplicated and that took an important amount of space (like bn.js in the screenshot below). [Yarn](https://yarnpkg.com/) and [Webpack 5](https://webpack.js.org/blog/2020-10-10-webpack-5-release/) seem to help a lot in these situations, but we chose to stick to npm and to use [npm-dedupe](https://docs.npmjs.com/cli/v6/commands/npm-dedupe) instead.
+
+We also had all of our icons bundled together inside our monorepo multi-packages (more info [here](https://medium.com/leboncoin-engineering-blog/how-we-migrated-our-legacy-frontend-to-nextjs-9c15f4f9182c)) that we use for our design system. Meaning that if you wanted to import a single icon to the page you had to import 95kB of SVGs!!
+
+While we have to include some libraries (such as React), it’s always a good idea to look at the ones you are using. By replacing [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) with [jwt-decode](https://github.com/auth0/jwt-decode), [MomentJS](https://momentjs.com/) by [datefns](https://date-fns.org/) and so on… we managed to chop off some precious kilobytes.
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*boZtsvMhjJ9HFa3T"
+  width="700"
+  height="522"
+  srcSet="https://miro.medium.com/max/552/0\*boZtsvMhjJ9HFa3T 276w, https://miro.medium.com/max/1104/0\*boZtsvMhjJ9HFa3T 552w, https://miro.medium.com/max/1280/0\*boZtsvMhjJ9HFa3T 640w, https://miro.medium.com/max/1400/0\*boZtsvMhjJ9HFa3T 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+Partial content of our old JS Bundle
+
+And this is only what we did on the “common bundle” (the one needed for every page). There are a lot of things to do on a per-page basis!
+
+The most important one is to make sure that you are using “tree-shaking”. Tree shaking is a term commonly used within a JavaScript context to describe the removal of dead code.
+
+Let’s say you have an utility file with a dozen of useful functions related to date parsing. You need one of them in your component, so you import the utility file.
+
+If you are using a bundler such as [Webpack](https://webpack.js.org/), [Rollup](https://rollupjs.org/) or [Parcel](https://parceljs.org/) one of their jobs is to remove all the unused code at build time so your users don’t have to download and parse it.
+
+We thought that was the default behaviour for Webpack, but not quite… Fortunately, it is a pretty [easy thing](https://webpack.js.org/guides/tree-shaking/) to do and we manage to scrape more than 150kB off !!
+
+We can go deeper, and make sure to only include what’s needed to render a page as fast as possible. If you are using NextJS you have two ways to do it. You can either use [React.lazy](https://reactjs.org/docs/code-splitting.html) or use [Next dynamic](https://nextjs.org/docs/advanced-features/dynamic-import). We chose the latter as React.lazy doesn’t support Server Side Rendering (SSR) yet.
+
+For example, we don’t need the “recent search” block to render the homepage. We can do a prerender of the important elements and then import the others components depending on the user.
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*jzqRWmqSRmTtLDJu"
+  width="700"
+  height="443"
+  srcSet="https://miro.medium.com/max/552/0\*jzqRWmqSRmTtLDJu 276w, https://miro.medium.com/max/1104/0\*jzqRWmqSRmTtLDJu 552w, https://miro.medium.com/max/1280/0\*jzqRWmqSRmTtLDJu 640w, https://miro.medium.com/max/1400/0\*jzqRWmqSRmTtLDJu 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+Example of a dynamically loaded component
+
+We could even make a custom solution to only load components when they are entering the viewport.
+
+That being said, you have to be careful when using these techniques. Dynamic imported components often make other elements on the page “shift”, increasing your user frustration and misclicks.
+
+You have to make sure that the appropriate space is allocated for each of your components and that the key elements are always imported first. This is an important metric called [CLS](https://web.dev/cls/) and is closely monitored by Google.
+
+There is also the possibility of preventing React from rehydrating every component.  
+While most of your components need React to be interactive, it is a waste of time to hydrate a simple list of links.
+
+Unfortunately, you have to do it by yourself and the only solutions we found today are not very elegant. We hope that the [future React server components](https://reactjs.org/blog/2020/12/21/data-fetching-with-react-server-components.html) or the [React 18 planned features](https://github.com/reactwg/react-18/discussions/22) will help us with this.
+
+## Assets
+
+As seen in the [HTTP Archive](https://httparchive.org/reports/state-of-images) report, a typical mobile web page weighs over 2.6 MB, and more than two-thirds of that weight are images.
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*xMVqZYXRiywEmRt3"
+  width="700"
+  height="320"
+  srcSet="https://miro.medium.com/max/552/0\*xMVqZYXRiywEmRt3 276w, https://miro.medium.com/max/1104/0\*xMVqZYXRiywEmRt3 552w, https://miro.medium.com/max/1280/0\*xMVqZYXRiywEmRt3 640w, https://miro.medium.com/max/1400/0\*xMVqZYXRiywEmRt3 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+We started optimizing our assets by manually compressing images with [squoosh.app](https://squoosh.app/) or [TinyPNG](https://tinypng.com/) but quickly realized that it was impossible to enforce and that our custom assets were often not well optimized.
+
+We decided to work on a custom component that’d automatically compress images at build time and use the [srcSet attributes and the picture element](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/img#attr-srcset).
+
+During the development, NextJS released their [Image component](https://nextjs.org/docs/api-reference/next/image). It was everything we dreamed of : Compression, Resizing, Lazy loading, etc… It even formats our assets to [WebP](https://developers.google.com/speed/webp) and [AVIF](https://jakearchibald.com/2020/avif-has-landed/)!!
+
+We made a proof of concept and tried it in production. It worked so well that we decided to use it right away!
+
+We also embraced the [CSS-in-JS](https://css-tricks.com/a-thorough-analysis-of-css-in-js/) technology. There are great benefits in terms of developer experience, but it also allows us to only import what’s needed instead of a huge CSS chunk. Unlike the classical CSS files import, the CSS-in-JS will be processed during the build and will only keep the needed styles.
+
+Finally, we tried some niche tricks to further improve the loading time by inlining frequently used SVG instead of downloading them every time. Milliseconds matter! 😄
+
+## Infrastructure
+
+The infrastructure ecosystem is in constant evolution and will be different for every company. While this is not something front-end developers are often the most comfortable with, infrastructure plays an important part when trying to improve performance.
+
+We used [WebPageTest](https://webpagetest.org/), another great tool when working on performance to get a better grasp at what was happening.
+
+WebPageTest allows you to see the “waterfall” requests of your page and looks like this :
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*zP7MgQs1IDVj4w0\_"
+  width="700"
+  height="296"
+  srcSet="https://miro.medium.com/max/552/0\*zP7MgQs1IDVj4w0\_ 276w, https://miro.medium.com/max/1104/0\*zP7MgQs1IDVj4w0\_ 552w, https://miro.medium.com/max/1280/0\*zP7MgQs1IDVj4w0\_ 640w, https://miro.medium.com/max/1400/0\*zP7MgQs1IDVj4w0\_ 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+WebPageTest waterfall view on an old leboncoin version
+
+As you can see on the screenshot above,we had to make calls from multiple domains to get everything we needed. This is a legacy from the old HTTP1.1 days where you were greatly limited by the number of parallel requests you could make.
+
+We made the effort to put everything on the same domain which had the immediate benefit of avoiding a new SSL negotiation and DNS connection.
+
+Speaking of domains, it can be a good idea to [preconnect](https://web.dev/uses-rel-preconnect/) or [prefetch](https://developer.mozilla.org/en-US/docs/Glossary/Prefetch) external domains where you know in advance that a request will be made. For example, if you get your fonts from Google’s server, you can gain some time by making an early connection to the googleapis origin.
+
+Also, don’t forget to use “[font-display: swap](https://developers.google.com/web/updates/2016/02/font-display)” to avoid blocking the rendering of your page.
+
+If you can, the best thing to do for your third-party scripts is to use the [\`async\` or \`defer\`](https://developer.mozilla.org/en-US/docs/Web/HTML/Element/script#attributes) properties, to only load them when the browser is idled and finished the hard work.
+
+Ultimately we enabled [Brotli](https://github.com/google/brotli), a better compression algorithm, to serve all our static assets to browsers that support it. In some cases, it’s an easy ~20% improvement over gzip!
+
+# How can we keep improving ?
+
+First of all, to avoid any regression, you need safeguards. Without safeguards, you can be sure that performance will degrade over time (we already suffered the consequences).
+
+The first thing we did was to display the common JS bundle size in each PR and compare it to our main branch (the one that is deployed to production).
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/1\*nzHzWYwx6XL-1WZwEhfVXg.png"
+  width="700"
+  height="256"
+  srcSet="https://miro.medium.com/max/552/1\*nzHzWYwx6XL-1WZwEhfVXg.png 276w, https://miro.medium.com/max/1104/1\*nzHzWYwx6XL-1WZwEhfVXg.png 552w, https://miro.medium.com/max/1280/1\*nzHzWYwx6XL-1WZwEhfVXg.png 640w, https://miro.medium.com/max/1400/1\*nzHzWYwx6XL-1WZwEhfVXg.png 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+If the difference is greater than 5%, the CI build will fail and the developers won’t be able to merge their PR.
+
+The second (and more advanced) safeguard relies on our [Datadog](https://www.datadoghq.com/) metrics. Every metric I’ve mentioned in the previous sections are stored and displayed in our Datadog. It makes it very easy to set up alerts.
+
+When something goes wrong (a metric goes below or above a certain threshold), an alert is triggered and we are directly pinged in a dedicated Slack channel.
+
+On top of that, we recently started using [LighthouseCI](https://github.com/GoogleChrome/lighthouse-ci) in our workflow. Once again, we are comparing the current PR against the main branch to quickly pinpoint the differences.
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*-8\_4NHlzqZbqyxku"
+  width="700"
+  height="504"
+  srcSet="https://miro.medium.com/max/552/0\*-8\_4NHlzqZbqyxku 276w, https://miro.medium.com/max/1104/0\*-8\_4NHlzqZbqyxku 552w, https://miro.medium.com/max/1280/0\*-8\_4NHlzqZbqyxku 640w, https://miro.medium.com/max/1400/0\*-8\_4NHlzqZbqyxku 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+For now, it’s only for informational purposes but we are planning to add blocking thresholds as well.
+
+## **Preventing backward steps is great but we also need to think about the future.**
+
+We want to stay up to date with the newest technologies and library versions.
+
+For example, we are currently experimenting with Webpack 5 and we found an appreciable shrink of ~5% in our common JS bundle.
+
+NextJS is also doing a great job of keeping up the pace with innovation. Every new version is a leap forward performance wise and adds more flexibility.
+
+[Next 11](https://nextjs.org/blog/next-11#improved-performance) allows the inlining of fonts, a better way of handling third-party scripts, image improvements and much more.
+
+We are confident that NextJS will keep getting better and better, and we always feel to be on the right track when upgrading.
+
+Besides that, we will keep doing everything we can to gain more precious milliseconds on our side. They aren’t “easy wins” anymore but we will constantly dig deeper to find new gains.
+
+After all, the further we go, the more fun we have!
+
+# It is far from being easy
+
+Despite everything we have done, we still have a very long way to go.
+
+We improved by a lot and we will keep on improving but **every part of your company has to be involved.**
+
+To give you an example of why this is important, the metric we are struggling the most with right now is the Cumulative Layout Shift.
+
+In comparison to our concurrents, our numbers look pretty bad :
+
+<img
+  alt=""
+  src="https://miro.medium.com/max/1400/0\*8ns1BW3GYrwLIl4F"
+  width="700"
+  height="471"
+  srcSet="https://miro.medium.com/max/552/0\*8ns1BW3GYrwLIl4F 276w, https://miro.medium.com/max/1104/0\*8ns1BW3GYrwLIl4F 552w, https://miro.medium.com/max/1280/0\*8ns1BW3GYrwLIl4F 640w, https://miro.medium.com/max/1400/0\*8ns1BW3GYrwLIl4F 700w"
+  sizes="700px"
+  role="presentation"
+/>
+
+Bad CLS score on Leboncoin homepage
+
+This is mainly due to our advertising and sale strategies and how we chose to interact with ad placements.
+
+There are also a lot of third-party scripts that we can’t really control and that we have to work with no matter what (they can be a huge bottleneck in some cases).
+
+As front-end developers alone, there is so much we can do. You need everybody at your side to succeed.  
+By including every sector and everyone, we can make sure that performance is becoming an essential part of our workflow.
+
+More often than not, new features are prioritized over performance. While both are very important for a product’s success, the features almost always come first, and it’s a hassle to fight for performance every day.
+
+At the end of the day, **performance is not only about the tech. To make it work, it also has to be a priority for the Product, Sales and Marketing departments.**
+
+**It’s only up to us to make it the company’s goal.**
