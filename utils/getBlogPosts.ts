@@ -6,5 +6,5 @@ export default function getBlogPosts({ limit = 10 }: { limit?: number }): string
 
     // TODO: Sort by last date
     blogPosts.splice(limit, blogPosts.length)
-    return blogPosts
+    return blogPosts.map((post) => post.replace(/.mdx/, ''))
 }

@@ -1,3 +1,4 @@
+import Link from "next/link";
 import { ReactElement } from "react";
 import getBlogPosts from "../../utils/getBlogPosts";
 
@@ -9,7 +10,11 @@ export default function Blog({ posts }: Props): ReactElement {
   return (
     <div>
       {posts.map((post, i) => {
-        return <p key={i}>{post}</p>;
+        return (
+          <div key={i}>
+            <Link href={`/blog/${post}`}>{post}</Link>
+          </div>
+        );
       })}
     </div>
   );
