@@ -5,14 +5,6 @@ description: This is some description
 
 # How we are improving our Web performance
 
-[![leboncoin](https://miro.medium.com/fit/c/96/96/2*QLSGq3mwL45M-6it0EkHRQ.png)](https://medium.com/@_leboncoin?source=post_page-----9f850d59d810--------------------------------)[leboncoin](https://medium.com/@_leboncoin?source=post_page-----9f850d59d810--------------------------------)Follow
-
-[Sep 7](https://medium.com/leboncoin-engineering-blog/how-we-are-improving-our-web-performance-9f850d59d810?source=post_page-----9f850d59d810--------------------------------) · 11 min read
-
-_By_ [_Thibaut Sabot_](https://twitter.com/thibautsabot) _(Lead Frontend Developer)_
-
-![](https://miro.medium.com/max/1400/1*qhugF068vK4uMOs_InDnWg.jpeg)Meeting room at leboncoin’s Paris HQ
-
 It’s no secret that Web performance plays an important role in a website’s success.
 
 You probably heard about the stories of Walmart that increased their conversion rate by 2% for every less second their page would take to load.
@@ -25,14 +17,11 @@ While we found a clear correlation between page performances and revenues over t
 
 According to [httparchive.org](https://httparchive.org/reports/page-weigh), in only 5 years, the average page weight grew by ~50% (almost 60% on mobile). I’m not even talking about the astonishing 350% increase in 10 years!
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*i-IXeJ7B8\_zsKEky"
+<Image
+  alt="Page weight evolution over time"
+  src="/blog/weight_evolution.png"
   width="700"
   height="378"
-  srcSet="https://miro.medium.com/max/552/0\*i-IXeJ7B8\_zsKEky 276w, https://miro.medium.com/max/1104/0\*i-IXeJ7B8\_zsKEky 552w, https://miro.medium.com/max/1280/0\*i-IXeJ7B8\_zsKEky 640w, https://miro.medium.com/max/1400/0\*i-IXeJ7B8\_zsKEky 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 One could argue that the average user network bandwidth and processing power also increased significantly during the last decade but I don’t think it’s fair to say that they both improved by that much.
@@ -68,28 +57,22 @@ It is a great start to measure performances.
 
 To give you a better idea, at leboncoin we are closely monitoring : the [FCP](https://web.dev/first-contentful-paint/), [LCP](https://web.dev/lcp/), [Speed Index](https://web.dev/speed-index/), [TBT](https://web.dev/tbt/), [TTI](https://web.dev/interactive/), [TTFB](https://web.dev/time-to-first-byte/), [CLS](https://web.dev/cls/), JS bundle size, size of our images, global css weight, number of third party scripts, [DOM](https://developer.mozilla.org/en-US/docs/Web/API/Document_Object_Model/Introduction) size, etc…
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*j938xe\_frdi0bCXg"
+<Image
+  alt="Bundle size evolution over time"
+  src="/blog/bundle_size.png"
   width="700"
   height="208"
-  srcSet="https://miro.medium.com/max/552/0\*j938xe\_frdi0bCXg 276w, https://miro.medium.com/max/1104/0\*j938xe\_frdi0bCXg 552w, https://miro.medium.com/max/1280/0\*j938xe\_frdi0bCXg 640w, https://miro.medium.com/max/1400/0\*j938xe\_frdi0bCXg 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 Example of the bundle size evolution over time
 
 It is up to us to monitor these metrics (using the [performance API](https://developer.mozilla.org/en-US/docs/Web/API/Performance), [Lighthouse](https://developers.google.com/web/tools/lighthouse), or [NextJS Vitals](https://nextjs.org/docs/advanced-features/measuring-performance)), but Google also provides the Chrome UX Report ([CrUX](https://developers.google.com/web/tools/chrome-user-experience-report/)). The CrUX is powered by **real** Chrome user measurements across the public web.
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*GocVJkvCF3RLcBX3"
+<Image
+  alt="Largest Contentful Paint"
+  src="/blog/lcp.png"
   width="700"
   height="428"
-  srcSet="https://miro.medium.com/max/552/0\*GocVJkvCF3RLcBX3 276w, https://miro.medium.com/max/1104/0\*GocVJkvCF3RLcBX3 552w, https://miro.medium.com/max/1280/0\*GocVJkvCF3RLcBX3 640w, https://miro.medium.com/max/1400/0\*GocVJkvCF3RLcBX3 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 LCP evolution graph thanks to CrUX
@@ -114,14 +97,11 @@ The first thing we did was to look at our JavaScript bundle. Since this is what 
 
 In mid-2020 parsing the bundle for the cars listing page ([https://www.leboncoin.fr/voitures/offres](https://www.leboncoin.fr/voitures/offres)) took almost 3s on a Galaxy S7 (against ~1.5s today) :
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*O-WmMvNnvnwqezev"
+<Image
+  alt="Performance profile"
+  src="/blog/perf_profile.png"
   width="700"
   height="140"
-  srcSet="https://miro.medium.com/max/552/0\*O-WmMvNnvnwqezev 276w, https://miro.medium.com/max/1104/0\*O-WmMvNnvnwqezev 552w, https://miro.medium.com/max/1280/0\*O-WmMvNnvnwqezev 640w, https://miro.medium.com/max/1400/0\*O-WmMvNnvnwqezev 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 There are multiple ways to inspect a bundle. We used a [webpack plugin](https://github.com/webpack-contrib/webpack-bundle-analyzer) that generated an HTML version of our bundle content at build time.
@@ -134,14 +114,11 @@ We also had all of our icons bundled together inside our monorepo multi-packages
 
 While we have to include some libraries (such as React), it’s always a good idea to look at the ones you are using. By replacing [jsonwebtoken](https://github.com/auth0/node-jsonwebtoken) with [jwt-decode](https://github.com/auth0/jwt-decode), [MomentJS](https://momentjs.com/) by [datefns](https://date-fns.org/) and so on… we managed to chop off some precious kilobytes.
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*boZtsvMhjJ9HFa3T"
+<Image
+  alt="Webpack bundle tree"
+  src="/blog/webpack_bundle.png"
   width="700"
   height="522"
-  srcSet="https://miro.medium.com/max/552/0\*boZtsvMhjJ9HFa3T 276w, https://miro.medium.com/max/1104/0\*boZtsvMhjJ9HFa3T 552w, https://miro.medium.com/max/1280/0\*boZtsvMhjJ9HFa3T 640w, https://miro.medium.com/max/1400/0\*boZtsvMhjJ9HFa3T 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 Partial content of our old JS Bundle
@@ -160,14 +137,11 @@ We can go deeper, and make sure to only include what’s needed to render a page
 
 For example, we don’t need the “recent search” block to render the homepage. We can do a prerender of the important elements and then import the others components depending on the user.
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*jzqRWmqSRmTtLDJu"
+<Image
+  alt="Dynamically loaded component"
+  src="/blog/recent_search.png"
   width="700"
   height="443"
-  srcSet="https://miro.medium.com/max/552/0\*jzqRWmqSRmTtLDJu 276w, https://miro.medium.com/max/1104/0\*jzqRWmqSRmTtLDJu 552w, https://miro.medium.com/max/1280/0\*jzqRWmqSRmTtLDJu 640w, https://miro.medium.com/max/1400/0\*jzqRWmqSRmTtLDJu 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 Example of a dynamically loaded component
@@ -187,14 +161,11 @@ Unfortunately, you have to do it by yourself and the only solutions we found tod
 
 As seen in the [HTTP Archive](https://httparchive.org/reports/state-of-images) report, a typical mobile web page weighs over 2.6 MB, and more than two-thirds of that weight are images.
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*xMVqZYXRiywEmRt3"
+<Image
+  alt="Repartition of the assets in a webpack"
+  src="/blog/assets_distribution.png"
   width="700"
   height="320"
-  srcSet="https://miro.medium.com/max/552/0\*xMVqZYXRiywEmRt3 276w, https://miro.medium.com/max/1104/0\*xMVqZYXRiywEmRt3 552w, https://miro.medium.com/max/1280/0\*xMVqZYXRiywEmRt3 640w, https://miro.medium.com/max/1400/0\*xMVqZYXRiywEmRt3 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 We started optimizing our assets by manually compressing images with [squoosh.app](https://squoosh.app/) or [TinyPNG](https://tinypng.com/) but quickly realized that it was impossible to enforce and that our custom assets were often not well optimized.
@@ -217,15 +188,7 @@ We used [WebPageTest](https://webpagetest.org/), another great tool when working
 
 WebPageTest allows you to see the “waterfall” requests of your page and looks like this :
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*zP7MgQs1IDVj4w0\_"
-  width="700"
-  height="296"
-  srcSet="https://miro.medium.com/max/552/0\*zP7MgQs1IDVj4w0\_ 276w, https://miro.medium.com/max/1104/0\*zP7MgQs1IDVj4w0\_ 552w, https://miro.medium.com/max/1280/0\*zP7MgQs1IDVj4w0\_ 640w, https://miro.medium.com/max/1400/0\*zP7MgQs1IDVj4w0\_ 700w"
-  sizes="700px"
-  role="presentation"
-/>
+<Image alt="WebPageTest" src="/blog/webpagetest.png" width="700" height="296" />
 
 WebPageTest waterfall view on an old leboncoin version
 
@@ -247,14 +210,11 @@ First of all, to avoid any regression, you need safeguards. Without safeguards, 
 
 The first thing we did was to display the common JS bundle size in each PR and compare it to our main branch (the one that is deployed to production).
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/1\*nzHzWYwx6XL-1WZwEhfVXg.png"
+<Image
+  alt="Github comment"
+  src="/blog/pr_comment.png"
   width="700"
   height="256"
-  srcSet="https://miro.medium.com/max/552/1\*nzHzWYwx6XL-1WZwEhfVXg.png 276w, https://miro.medium.com/max/1104/1\*nzHzWYwx6XL-1WZwEhfVXg.png 552w, https://miro.medium.com/max/1280/1\*nzHzWYwx6XL-1WZwEhfVXg.png 640w, https://miro.medium.com/max/1400/1\*nzHzWYwx6XL-1WZwEhfVXg.png 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 If the difference is greater than 5%, the CI build will fail and the developers won’t be able to merge their PR.
@@ -265,14 +225,11 @@ When something goes wrong (a metric goes below or above a certain threshold), an
 
 On top of that, we recently started using [LighthouseCI](https://github.com/GoogleChrome/lighthouse-ci) in our workflow. Once again, we are comparing the current PR against the main branch to quickly pinpoint the differences.
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*-8\_4NHlzqZbqyxku"
+<Image
+  alt="Lighthouse CI example"
+  src="/blog/lhci.png"
   width="700"
   height="504"
-  srcSet="https://miro.medium.com/max/552/0\*-8\_4NHlzqZbqyxku 276w, https://miro.medium.com/max/1104/0\*-8\_4NHlzqZbqyxku 552w, https://miro.medium.com/max/1280/0\*-8\_4NHlzqZbqyxku 640w, https://miro.medium.com/max/1400/0\*-8\_4NHlzqZbqyxku 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 For now, it’s only for informational purposes but we are planning to add blocking thresholds as well.
@@ -303,14 +260,11 @@ To give you an example of why this is important, the metric we are struggling th
 
 In comparison to our concurrents, our numbers look pretty bad :
 
-<img
-  alt=""
-  src="https://miro.medium.com/max/1400/0\*8ns1BW3GYrwLIl4F"
+<Image
+  alt="Cumulative Layout Shift"
+  src="/blog/cls.png"
   width="700"
   height="471"
-  srcSet="https://miro.medium.com/max/552/0\*8ns1BW3GYrwLIl4F 276w, https://miro.medium.com/max/1104/0\*8ns1BW3GYrwLIl4F 552w, https://miro.medium.com/max/1280/0\*8ns1BW3GYrwLIl4F 640w, https://miro.medium.com/max/1400/0\*8ns1BW3GYrwLIl4F 700w"
-  sizes="700px"
-  role="presentation"
 />
 
 Bad CLS score on Leboncoin homepage
