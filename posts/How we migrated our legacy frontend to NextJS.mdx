@@ -1,0 +1,183 @@
+---
+title: How we migrated our legacy frontend to NextJS
+description: How we migrated our legacy frontend to NextJS
+---
+
+# How we migrated our legacy frontend to NextJS
+
+Over the years, web users’ needs and expectations changed. Nowadays we expect a highly responsive, good-looking and attractive website. “It just works” is far from being enough anymore.
+
+Technically, [leboncoin.fr](http://www.leboncoin.fr) is nothing like the old version that we started 15 years ago. We kept the good old spirit, our cultures goals and our amazing user base, but internally leboncoin changed a lot during those years.
+
+The fast-pace of new frontend frameworks is making us rethink how we approach these new technological challenges.
+
+Today we are more than 40 web developers divided into 20 feature teams. We have around 200 000 lines of codes and an incalculable amount of features.
+
+And we keep expanding!
+
+Today I’ll explain how we made the migration to such a big code base on [NextJS](https://nextjs.org/), a popular React Framework.
+
+# Why do we need this change?
+
+After a long and painful migration from a homemade template language to React 3 years ago we quickly faced the same problem all over again.
+
+When the React rewrite happened, we chose [RocJS](https://github.com/rocjs), a framework that allowed us to forget about the configuration and jump straight to coding.
+
+The core team and the major contributors of Roc were working at Schibsted, the group which owns leboncoin. It was a wonderful opportunity for us to build, share, and learn together !
+
+While the promise was appealing and the framework pretty popular at that time, it quickly fell to oblivion and was not maintained anymore.
+
+We just spent a lot of time migrating to React, and 2 and a half years later we couldn’t move away from Webpack 1, React 15 and react-router v3.
+
+We felt stuck and in desperate need to get out of this situation.
+
+React 16 was on the verge of releasing, and we were all eager to check it out.
+
+The good news was that migrating from React 15 to React 16 would be way easier than the previous rewrite.
+
+But… months after months, new features were added to the codebase, and we had now a LOT of files/components/pages.
+
+Besides, we had trouble code splitting and optimizing it (having a blackbox-framework on top of Webpack v1 may not be such a great idea after all).
+
+Also, SEO and performance is a big deal for us, we can’t allow our website to be slow as hell.
+
+At this point, we started to think about our choices, and we drafted 3 possibilities:
+
+- Take the leadership of RocJS, and really start contributing to it.
+- Build our proper Node server (based on Express) and all the ecosystem to build, package and run our web app.
+- Migrate to a new framework.
+
+We decided at first to bet on RocJS, and we began to study the framework and see the possibilities to upgrade it.
+
+Unfortunately, we quickly realized that all the core codebase was very hard to understand and mastering it would take ages. We could not build an entire team to work on it in the long run and most importantly: we didn’t want to be stuck again in the future. Maintaining a framework is time consuming and requires a lot of resources.
+
+# Here comes NextJS!
+
+Fortunately, at leboncoin **we are allowed a full day every two weeks to experiment, refactor, and make proof of concepts**. We call it the “guild day” and it allows every developer to express themselves and to share their experiences and troubles.
+
+It’s during those days that we tried and experimented with NextJS.
+
+Next.js is a React framework with a big community and a very reactive team regarding major updates of React and its tools. Moreover, some of our developers had already heard of it.
+
+Easy to learn, well documented, customizable, with a very kind and available community on Spectrum, we loved NextJS on the first try !
+
+At first, we chose a few easy pages and ran them only in development. We were quite satisfied with the result, passing from the “old code” to new code was fairly simple and we liked how NextJS allowed us to modify everything we needed but still provided a very optimized configuration out of the box.
+
+Then, we spent some time explaining how NextJS worked and made sure every web dev was on board (luckily for us, Next has a very good starting documentation).
+
+<Image
+  alt="Next x Leboncoin"
+  src="/blog/nextxlbc.png"
+  width="700"
+  height="251"
+/>
+
+After a while, we were ready! The plan was simple, we would fork our repository to a new one and we would get rid of RocJS and replace it with NextJS.
+
+The Core team was in charge of the migration and were able to spend full time on it.
+
+In only a few weeks, they managed to make it work. We were having existing pages “kind of” working with NextJS.
+
+Why kind of? Well, even if the pages were displayed, we had a boatload of warnings and errors popping everywhere in the console. And because the pages were written with the old logic, a lot of NextJS improvements were not working.
+
+But it was a nice first step. The real problem though, was the strategy we opted in to migrate the pages. We decided that every day, we would rebase the new code released by every developer on the old repository to the new one so we could always be up to date on the NextJS’s repository.
+
+And I think the two Core team developers still have nightmares of this period to this day.
+
+Indeed, because we have more than 40 web developers, they would spend hours rebasing every day! Even worse, when the Core team developers made changes on the new repository they had to make sure that nothing was lost during the rebase, meaning that they’d often have to sit next to every developer that made a feature this day.
+
+# Then we took a step back
+
+Obviously this approach was not sustainable, and we couldn’t ask every developer to make a new feature directly on the Next repository and forget about the old one. No manager on earth would have accepted to gamble its developers’ time on an early-unreleased new method that was started during the guild days.
+
+We decided to gather a small group of voluntary developers to think about how we should approach this intelligently.
+
+First, we would stop this rebase non-sense. We would remove every “old” page from the Next repository and only allow new ones.
+
+Secondly, we would create a way for developers to migrate their pages with the less pain possible.
+
+And this was how our Design System was born!
+
+Until now, every component was created inside the repository, and every developer would pick what they needed. The problem was that nobody on the UX team knew what these components looked like, and every feature team started to make their own implementations.
+
+<Image
+  alt="Our design system"
+  src="/blog/brikke.png"
+  width="700"
+  height="267"
+/>
+
+Leboncoin’s design system
+
+The idea was to isolate the presentational components as much as possible and to make the pages require only what they needed. This way, the pages themselves would be much smaller and thus easier to migrate, free of any component and containing only business logic.
+
+Once again we used the “_guild days_” and the time of the Core team to create these components.
+
+We decided to create a new repository. A monorepo-multi packages handled by [lerna](https://github.com/lerna/lerna). This way every component would be in the same place and available to every leboncoin project.
+
+We also created a [Storybook](https://storybook.js.org/), updated on every merge so that the UX team can check our work and contribute in real time.
+
+We spent months creating new components, until we felt that we had a good enough library.
+
+This one was actually easier to sell, by onboarding the UX team with us, everybody saw a benefit to this approach and we were allowed to spend more time on it.
+
+Once our design system was stacked of good-looking components, we came back where we were and started working on migrating pages.
+
+# To infinity and beyond
+
+We were confident that the migration would now be much easier. But because it was still hard to sell, the lead developers and the Core team were the only ones spending time working on it.
+
+But this way, they would face the time-consuming bugs/glitch in the process first.
+
+We started with some standalone pages that wouldn’t hurt the business too much.
+
+And indeed, it took time between the first new page iteration and the moment it went in production !
+
+We needed to create a new flow to deploy docker images with kubernetes (we were using debian packages until then for the Web app). But thanks to our amazing infrastructure team, it was not such a pain for us.
+
+You can find more information about our deployment pipeline here : [https://medium.com/leboncoin-engineering-blog/leboncoin-commits-life-960a86cd35ff](https://medium.com/leboncoin-engineering-blog/leboncoin-commits-life-960a86cd35ff)
+
+We started to migrate more and more small isolated pages to prove that everything was under control and that we could continue forward.
+
+Then, we were finally able to run the migration at a bigger scale ! Every developer would spend their entire “guild day” working on page migration, and they’d make the rebase themselves on the “next” repository (it’s way easier to rebase your own code ;)).
+
+To make the new repository even more appealing, we stopped upgrading the dependencies on the old one and restrained ourselves from improving it. This way, if the web developers wanted to try out all the new cool features and enhancements, they would have to make the effort of migrating their pages.
+
+The turning point was when the Search feature team accepted to migrate a huge page (The home page!) to NextJS.
+
+Four Web developers spent 2 months creating new UI components and played with the newer features of React.
+
+**The best part about a migration is taking time to re-think the logic. Code that was written 3 years ago might not be relevant anymore.**
+
+And now that we have a lot of presentational components, we can spend more time on “cleaning” the pages.
+
+<Image
+  alt="Leboncoin's homepage"
+  src="/blog/leboncoin_home.png"
+  width="700"
+  height="552"
+/>
+
+The new leboncoin’s homepage on NextJS
+
+The home page migration was painful but was a success nonetheless and paved the way for the rest of the Web App.
+
+Now big pages like Classified ad, messaging, profile, transactions, … are all powered by NextJS!
+
+And more are coming!
+
+We managed to convince everyone that the migration to NextJS was needed and is working!
+
+# What did we learn?
+
+On this 3 years journey, we learnt a lot!
+
+First of all, we learnt that allowing time for developers to experiment is paying off.
+
+Even if they are not the ones looking at users metrics all day, they still want what’s best for the end users and they can greatly contribute to it.
+
+Also, the first idea might and will probably fail. It’s fine. We learned from our mistakes and we improved our approach. The important part is to understand what went wrong and what we can do better.
+
+Keep believing! In 3 years we went from “little project in the garage” to “big migration embedded in each feature team’s roadmap”. You can’t achieve that if you don’t believe in what you do, because nobody else will believe it for you.
+
+We can keep on improving! NextJS is only the first step. Now we can really focus on performance and optimization and make sure to provide the best possible experience.

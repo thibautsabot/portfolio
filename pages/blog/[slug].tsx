@@ -3,6 +3,7 @@ import getBlogPostContent, {
   BlogContent,
 } from "../../utils/getBlogPostContent";
 
+import Layout from "../../src/Layout";
 import { ReactElement } from "react";
 import getBlogPosts from "../../utils/getBlogPosts";
 import { getMDXComponent } from "mdx-bundler/client";
@@ -40,16 +41,18 @@ export default function BlogPost({ content }: Props): ReactElement {
     [content.code]
   );
   return (
-    <BlogLayout>
-      <Component
-        components={{
-          p: Paragraph,
-          h1: Title,
-          h2: SubTitle,
-          Image: Image as any,
-        }}
-      />
-    </BlogLayout>
+    <Layout>
+      <BlogLayout>
+        <Component
+          components={{
+            p: Paragraph,
+            h1: Title,
+            h2: SubTitle,
+            Image: Image as any,
+          }}
+        />
+      </BlogLayout>
+    </Layout>
   );
 }
 
