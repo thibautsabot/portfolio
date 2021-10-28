@@ -61,7 +61,7 @@ export default function Tweet({
           <Name>
             {authorName}&nbsp;
             {verified && (
-              <Verified fill={themeContext.subColor} width={24} height={24} />
+              <Verified fill={themeContext.subColor} width={20} height={20} />
             )}
           </Name>
           <Handle>@{authorHandle}</Handle>

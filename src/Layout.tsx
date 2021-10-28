@@ -9,12 +9,17 @@ import sun from "../assets/sun.png";
 const ChangeThemeButton = styled.button`
   background: transparent;
   font-size: 1em;
-  margin: 1em 0;
   cursor: pointer;
   border: none;
-  right: 50px;
+  right: 0px;
   position: absolute;
-  top: 20px;
+  top: 0px;
+
+  @media (min-width: 960px) {
+    top: 20px;
+    margin: 1em 0;
+    right: 50px;
+  }
 `;
 
 export const darkTheme = {

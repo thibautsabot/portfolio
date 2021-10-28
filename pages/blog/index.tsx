@@ -1,19 +1,27 @@
 import Link from "next/link";
 import { ReactElement } from "react";
 import getBlogPosts from "../../utils/getBlogPosts";
-
+import styled from "styled-components";
 interface Props {
   posts: string[];
 }
+
+export const BlogPost = styled.div`
+  margin: 20px 0;
+
+  &:hover {
+    text-decoration: underline;
+  }
+`;
 
 export default function Blog({ posts }: Props): ReactElement {
   return (
     <div>
       {posts.map((post, i) => {
         return (
-          <div key={i}>
+          <BlogPost key={i}>
             <Link href={`/blog/${post}`}>{post}</Link>
-          </div>
+          </BlogPost>
         );
       })}
     </div>

@@ -37,6 +37,7 @@ export const NamesContainer = styled.div`
 export const Name = styled.p`
   margin: 0;
   display: flex;
+  align-items: center;
 `;
 
 export const Handle = styled.p`
