@@ -10,5 +10,8 @@ module.exports = {
 
     return config;
   },
-  swcMinify: true
+  swcMinify: true,
+  images: {
+    formats: ['image/avif', 'image/webp']
+  }
 }
