@@ -1,9 +1,9 @@
+import { DiscussionCommentEdge } from "@octokit/graphql-schema";
 import Head from "next/head";
 import Image from "next/image";
-import getDiscussions from "../src/github/utils/getDiscussions";
-import { DiscussionCommentEdge } from "@octokit/graphql-schema";
 import { ReactElement } from "react";
 import { User } from "@octokit/graphql-schema";
+import getDiscussions from "../src/github/utils/getDiscussions";
 
 interface Props {
   discussions: DiscussionCommentEdge[];

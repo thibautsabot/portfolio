@@ -1,7 +1,8 @@
 import { useCallback, useState } from "react";
-import useWindowSize from "../../utils/useWindowsSize";
-import styled from "styled-components";
+
 import { ReactElement } from "react";
+import styled from "styled-components";
+import useWindowSize from "../../utils/useWindowsSize";
 
 interface ItemWrapperProps {
   readonly transitionDuration: string;
@@ -14,7 +15,6 @@ const ItemContainer = styled.div`
   margin: 0;
   padding-left: 5px;
   overflow: hidden;
-  color: ${(props): string => props.theme.color};
   display: flex;
   align-items: center;
   transition: 0s;
@@ -33,8 +33,7 @@ const ItemWrapper = styled.span<ItemWrapperProps>`
   }
 
   &:hover {
-    // transition: ${(props): string => props.transitionDuration} linear;
-    transition: 1s linear;
+    transition: ${(props): string => props.transitionDuration} linear;
     width: auto;
 
     transform: ${(props): string =>

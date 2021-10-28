@@ -1,7 +1,7 @@
 import styled from "styled-components";
 
 export const TweetContainer = styled.div`
-  border: 1px solid #1f2937;
+  border: 1px solid black;
   border-radius: 5px;
   width: 90%;
   margin: 0 auto 20px auto;
@@ -35,7 +35,6 @@ export const NamesContainer = styled.div`
 `;
 
 export const Name = styled.p`
-  color: ${(props): string => props.theme.color};
   margin: 0;
   display: flex;
 `;
@@ -46,7 +45,6 @@ export const Handle = styled.p`
 `;
 
 export const Text = styled.p`
-  color: ${(props): string => props.theme.color};
   margin: 0;
 `;
 

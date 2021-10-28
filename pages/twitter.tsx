@@ -1,7 +1,6 @@
 import { Tweetv2TimelineResult, UserV2 } from "twitter-api-v2";
 
 import Head from "next/head";
-import Layout from "../src/Layout";
 import { ReactElement } from "react";
 import Tweet from "../src/tweet";
 
@@ -25,7 +24,7 @@ interface Props {
 
 export default function TwitterPage({ tweets }: Props): ReactElement {
   return (
-    <Layout>
+    <>
       <Head>
         <title key="title">Twitter</title>
         <meta name="description" content="Thibautsabot Twitter Dashboard" />
@@ -33,7 +32,7 @@ export default function TwitterPage({ tweets }: Props): ReactElement {
       {tweets.map((tweet) => (
         <Tweet key={tweet.id} {...tweet} />
       ))}
-    </Layout>
+    </>
   );
 }
 

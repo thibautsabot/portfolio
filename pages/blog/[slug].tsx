@@ -30,10 +30,7 @@ const Image = (props: ImageProps): ReactElement => {
   return <NextImage {...props} />;
 };
 
-const BlogLayout = styled.div`
-  max-width: 1024px;
-  margin: 0 auto;
-`;
+const BlogLayout = styled.div``;
 
 export default function BlogPost({ content }: Props): ReactElement {
   const Component = useMemo(
@@ -41,18 +38,16 @@ export default function BlogPost({ content }: Props): ReactElement {
     [content.code]
   );
   return (
-    <Layout>
-      <BlogLayout>
-        <Component
-          components={{
-            p: Paragraph,
-            h1: Title,
-            h2: SubTitle,
-            Image: Image as any,
-          }}
-        />
-      </BlogLayout>
-    </Layout>
+    <BlogLayout>
+      <Component
+        components={{
+          p: Paragraph,
+          h1: Title,
+          h2: SubTitle,
+          Image: Image as any,
+        }}
+      />
+    </BlogLayout>
   );
 }
 

@@ -1,4 +1,6 @@
-import React, { ReactElement, ElementType } from "react";
+import React, { ElementType, ReactElement } from "react";
+
+import Layout from "../src/Layout";
 
 function MyApp({
   Component,
@@ -7,7 +9,11 @@ function MyApp({
   Component: ElementType;
   pageProps: any;
 }): ReactElement {
-  return <Component {...pageProps} />;
+  return (
+    <Layout>
+      <Component {...pageProps} />
+    </Layout>
+  );
 }
 
 export default MyApp;

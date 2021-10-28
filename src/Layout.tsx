@@ -1,28 +1,28 @@
+import { ReactElement, useState } from "react";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
+
+import Header from './components/Header'
 import Image from "next/image";
-import { useState, ReactElement } from "react";
 import moon from "../assets/moon.webp";
 import sun from "../assets/sun.png";
 
 const ChangeThemeButton = styled.button`
-  color: ${(props): string => props.theme.color};
   background: transparent;
   font-size: 1em;
   margin: 1em 0;
   cursor: pointer;
-  display: flex;
-  justify-content: end;
-  width: 100%;
   border: none;
-  padding-right: 50px;
+  right: 50px;
+  position: absolute;
+  top: 20px;
 `;
 
 export const darkTheme = {
-  color: "white",
+  color: "#f8f8f2",
   subColor: "grey",
   background: "#151515",
   // body: "#353535",
-  body: "black"
+  body: "#282a36"
 };
 
 export const lightTheme = {
@@ -35,6 +35,7 @@ export const lightTheme = {
 export const GlobalStyles = createGlobalStyle`
   body {
     background: ${({ theme }): string => theme.body};
+    color: ${(props): string => props.theme.color};
     padding: 0;
     margin: 0;
     font-family: -apple-system, BlinkMacSystemFont, Segoe UI, Roboto, Oxygen,
@@ -51,6 +52,11 @@ export const GlobalStyles = createGlobalStyle`
   }
 `;
 
+const Main = styled.main`
+  max-width: 1024px;
+  margin: 0 auto;
+`
+
 interface Props {
   children: React.ReactNode;
 }
@@ -63,6 +69,7 @@ export default function Layout({ children }: Props): ReactElement {
   return (
     <ThemeProvider theme={appTheme === "light" ? lightTheme : darkTheme}>
       <GlobalStyles />
+      <Header />
       <ChangeThemeButton onClick={toggleTheme}>
         <Image
           alt="change theme"
@@ -72,7 +79,7 @@ export default function Layout({ children }: Props): ReactElement {
           height={50}
         />
       </ChangeThemeButton>
-      {children}
+      <Main>{children}</Main>
     </ThemeProvider>
   );
 }
