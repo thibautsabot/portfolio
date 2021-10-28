@@ -12,22 +12,22 @@
     "@octokit/graphql": "4.8.0",
     "@octokit/graphql-schema": "10.73.0",
     "mdx-bundler": "^6.0.2",
-    "next": "11.1.2",
+    "next": "12.0.1",
     "react": "17.0.2",
     "react-dom": "17.0.2",
-    "sass": "1.43.2",
+    "sass": "1.43.4",
     "styled-components": "5.3.3",
     "swr": "1.0.1",
-    "twitter-api-v2": "^1.6.3"
+    "twitter-api-v2": "^1.6.4"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",
-    "@types/react": "17.0.31",
+    "@types/react": "17.0.33",
     "@types/styled-components": "^5.1.15",
-    "@typescript-eslint/eslint-plugin": "^5.1.0",
-    "esbuild": "^0.13.8",
+    "@typescript-eslint/eslint-plugin": "^5.2.0",
+    "esbuild": "^0.13.10",
     "eslint": "7.32.0",
-    "eslint-config-next": "11.1.2",
+    "eslint-config-next": "12.0.1",
     "typescript": "4.4.4"
   }
 }
