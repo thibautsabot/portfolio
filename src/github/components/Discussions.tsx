@@ -1,11 +1,12 @@
+import { BlockContainer, Content, Title } from './Container'
+
 import { DiscussionCommentEdge } from "@octokit/graphql-schema";
 import Image from "next/image";
 import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
+import { ReactElement } from 'react'
 import styled from "styled-components";
 import upvote from "../assets/upvote.png";
-import { BlockContainer, Content, Title } from './Container'
-import { ReactElement } from 'react'
 
 interface Props {
   discussions: DiscussionCommentEdge[];
@@ -36,6 +37,7 @@ const Upvotes = styled.p`
   font-size: 10px;
   display: flex;
   justify-content: center;
+  align-items: center;
   background-color: #45d25a;
 `;
 

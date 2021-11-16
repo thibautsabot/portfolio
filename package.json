@@ -18,7 +18,8 @@
     "sass": "1.43.4",
     "styled-components": "5.3.3",
     "swr": "1.0.1",
-    "twitter-api-v2": "^1.6.5"
+    "twitter-api-v2": "^1.6.5",
+    "use-prefers-color-scheme": "^0.1.1"
   },
   "devDependencies": {
     "@svgr/webpack": "^5.5.0",

@@ -15,6 +15,7 @@ const BlockContainer = styled.div`
 `;
 
 const Title = styled.h1`
+  color: black;
   font-weight: bold;
   display: block;
   font-size: 12px;

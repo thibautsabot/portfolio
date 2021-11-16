@@ -1,6 +1,7 @@
-import Link from 'next/link'
-import { ReactElement } from "react"
+import Link from "next/link";
+import { ReactElement } from "react";
 import styled from "styled-components";
+import { useRouter } from "next/router";
 
 const HeaderContainer = styled.header`
   height: 100px;
@@ -13,13 +14,39 @@ const HeaderContainer = styled.header`
   }
 `;
 
+const HeaderLinkText = styled.a<{ isCurrentLink: boolean }>`
+  text-decoration: ${(props): string =>
+    props.isCurrentLink ? "underline" : "none"};
+  
+  &:hover {
+    text-decoration: underline;
+  }
+`;
+
+const HeaderLink = ({
+  href,
+  children,
+}: {
+  href: string;
+  children: string;
+}): ReactElement => {
+  const router = useRouter();
+  const isCurrentLink = router.asPath === href;
+
+  return (
+    <Link href={href} passHref>
+      <HeaderLinkText isCurrentLink={isCurrentLink}>{children}</HeaderLinkText>
+    </Link>
+  );
+};
+
 export default function Header(): ReactElement {
   return (
     <HeaderContainer>
-      <Link href="/">Home</Link>
-      <Link href="/twitter">Twitter</Link>
-      <Link href="/github">Github</Link>
-      <Link href="/blog">Blog</Link>
+      <HeaderLink href="/">Home</HeaderLink>
+      <HeaderLink href="/twitter">Twitter</HeaderLink>
+      <HeaderLink href="/github">Github</HeaderLink>
+      <HeaderLink href="/blog">Blog</HeaderLink>
     </HeaderContainer>
-  )
+  );
 }

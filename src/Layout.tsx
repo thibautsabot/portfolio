@@ -1,7 +1,7 @@
-import { ReactElement, useState } from "react";
+import { ReactElement, useEffect, useState } from "react";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 
-import Header from './components/Header'
+import Header from "./components/Header";
 import Image from "next/image";
 import moon from "../assets/moon.webp";
 import sun from "../assets/sun.png";
@@ -25,9 +25,9 @@ const ChangeThemeButton = styled.button`
 export const darkTheme = {
   color: "#f8f8f2",
   subColor: "grey",
-  background: "#151515",
+  background: "#0e0e0e",
   // body: "#353535",
-  body: "#282a36"
+  body: "#0e0e0e",
 };
 
 export const lightTheme = {
@@ -59,17 +59,54 @@ export const GlobalStyles = createGlobalStyle`
 
 const Main = styled.main`
   max-width: 1024px;
+  padding: 0 20px;
   margin: 0 auto;
+  position: relative;
+  min-height: calc(100vh - 290px); // 100px from head + 100px from footer + 90px for margins
+`;
+
+const Footer = styled.footer`
+  background: rgba(255, 255, 255, 0.05);
+  margin-top: 50px;
+  padding: 40px;
+  margin-bottom: 20px;
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+`;
+
+const FooterLogo = styled.div`
+  padding: 0 5px;
 `
 
 interface Props {
   children: React.ReactNode;
 }
 
+const DEFAULT_THEME = "dark";
+
 export default function Layout({ children }: Props): ReactElement {
-  const [appTheme, setAppTheme] = useState("dark");
-  const toggleTheme = (): void =>
-    setAppTheme(appTheme === "light" ? "dark" : "light");
+  const [appTheme, setAppTheme] = useState(DEFAULT_THEME);
+  const toggleTheme = (): void => {
+    const theme = appTheme === "light" ? "dark" : "light";
+    setAppTheme(theme);
+    window.localStorage.setItem("theme", theme);
+  };
+
+  useEffect(() => {
+    if (window.localStorage.getItem("theme")) {
+      setAppTheme(window.localStorage.getItem("theme") || DEFAULT_THEME);
+    } else {
+      if (
+        window.matchMedia &&
+        window.matchMedia("(prefers-color-scheme: dark)").matches
+      ) {
+        setAppTheme("dark");
+      } else {
+        setAppTheme("light");
+      }
+    }
+  }, []);
 
   return (
     <ThemeProvider theme={appTheme === "light" ? lightTheme : darkTheme}>
@@ -85,6 +122,37 @@ export default function Layout({ children }: Props): ReactElement {
         />
       </ChangeThemeButton>
       <Main>{children}</Main>
+      <Footer>
+        Hosted on
+        <FooterLogo>
+          <a href="https://vercel.com/">
+            <Image src="/vercel.svg" alt="Vercel Logo" width={65} height={16} />
+          </a>
+        </FooterLogo>
+        , built with
+        <FooterLogo>
+          <a href="https://nextjs.org/">
+            <Image
+              src="/next_logo.png"
+              alt="Next.js Logo"
+              width={16}
+              height={16}
+            />
+          </a>
+        </FooterLogo>
+        and available on
+        <FooterLogo>
+          <a href="https://github.com/thibautsabot/portfolio/">
+            <Image
+              src="/github_logo.png"
+              alt="Github Logo"
+              width={16}
+              height={16}
+            />
+          </a>
+        </FooterLogo>
+        .
+      </Footer>
     </ThemeProvider>
   );
 }
