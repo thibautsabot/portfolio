@@ -50,7 +50,7 @@ export default function Discussions({ discussions }: Props): ReactElement {
     <DiscussionsContainer>
       <Title>Discussions</Title>
       <Content>
-        {discussions.map(({ node }) => (
+        {discussions?.map(({ node }) => (
           <ContentContainer key={node?.id}>
             <Image layout="fixed" src={upvote} width={18} height={30} alt="upvotes" />
             <Upvotes>{node?.upvoteCount}</Upvotes>

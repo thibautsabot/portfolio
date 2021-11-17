@@ -1,4 +1,11 @@
-import { BlockContainer, Content, ContentContainer, Title } from "./Container";
+import {
+  BlockContainer,
+  Content,
+  ContentContainer,
+  Error,
+  Loading,
+  Title,
+} from "./Container";
 
 import Link from "next/link";
 import MarqueeDescription from "../../components/MarqueeDescription";
@@ -45,31 +52,34 @@ export default function Commits({ limit = 10 }: Props): ReactElement {
 
   const lastCommits = getUniqCommits(data).slice(0, limit);
 
-  if (error) return <p>An error has occurred.</p>;
-  if (!lastCommits) return <p>Loading...</p>;
-
   return (
     <CommitsContainer>
       <Title>Commits</Title>
       <Content>
-        {getUniqCommits(lastCommits).map((commit) => (
-          <Link
-            passHref
-            key={commit?.id}
-            href={`https://github.com/${
-              commit?.repo?.name
-            }/commit/${getCommitHash(commit)}`}
-          >
-            <ContentContainer>
-              <RepositoryIcon
-                name={commit?.repo?.name.replace("thibautsabot/", "")}
-              />
-              <MarqueeDescription>
-                {getCommitMessage(commit)}
-              </MarqueeDescription>
-            </ContentContainer>
-          </Link>
-        ))}
+        {error ? (
+          <Error />
+        ) : !data ? (
+          <Loading />
+        ) : (
+          getUniqCommits(lastCommits).map((commit) => (
+            <Link
+              passHref
+              key={commit?.id}
+              href={`https://github.com/${
+                commit?.repo?.name
+              }/commit/${getCommitHash(commit)}`}
+            >
+              <ContentContainer>
+                <RepositoryIcon
+                  name={commit?.repo?.name.replace("thibautsabot/", "")}
+                />
+                <MarqueeDescription>
+                  {getCommitMessage(commit)}
+                </MarqueeDescription>
+              </ContentContainer>
+            </Link>
+          ))
+        )}
       </Content>
     </CommitsContainer>
   );

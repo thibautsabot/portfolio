@@ -24,8 +24,13 @@ function ForkItem({ event }: { event: any }): ReactElement {
           <Image layout="fixed" width={24} height={24} alt="fork" src={fork} />
         </div>
         <MarqueeDescription>
-          New fork of&nbsp;<code>{event.repo.name}</code>&nbsp;- &quot;
-          {event.payload.forkee.description}&quot;
+          New fork of&nbsp;<code>{event.repo.name}</code>
+          {event.payload.forkee.description ? (
+            <>
+              &nbsp;- &quot;
+              {event.payload.forkee.description}&quot;
+            </>
+          ) : null}
         </MarqueeDescription>
       </ItemLink>
     </Link>

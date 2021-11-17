@@ -15,9 +15,18 @@ interface Props {
 }
 
 const Github = styled.div`
-  display: flex;
-  flex-wrap: wrap;
-  height: 100%;
+  display: grid;
+  grid-gap: 30px;
+  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  align-items: center;
+
+  @media (min-width: 960px) {
+    > div {
+      &:last-child {
+        margin-left: calc(60%);
+      }
+    }
+  }
 `;
 
 export default function GithubPage({ discussions }: Props): ReactElement {
@@ -43,7 +52,12 @@ export async function getServerSideProps(): Promise<{
     discussions: User["repositoryDiscussionComments"]["edges"];
   };
 }> {
-  const discussions = await getDiscussions();
+  let discussions: User["repositoryDiscussionComments"]["edges"];
+  try {
+    discussions = await getDiscussions();
+  } catch (_: any) {
+    discussions = [];
+  }
 
   return {
     props: {
