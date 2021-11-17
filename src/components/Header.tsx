@@ -30,8 +30,9 @@ const HeaderLink = ({
   href: string;
   children: string;
 }): ReactElement => {
-  const router = useRouter();
-  const isCurrentLink = router.asPath === href;
+  const router = useRouter()
+  const isCurrentLink = href === '/' ? href === router.asPath : router.asPath.includes(href)
+
 
   return (
     <Link href={href} passHref>

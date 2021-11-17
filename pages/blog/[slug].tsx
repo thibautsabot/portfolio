@@ -3,7 +3,7 @@ import getBlogPostContent, {
   BlogContent,
 } from "../../utils/getBlogPostContent";
 
-import Layout from "../../src/Layout";
+import Link from "next/link";
 import { ReactElement } from "react";
 import getBlogPosts from "../../utils/getBlogPosts";
 import { getMDXComponent } from "mdx-bundler/client";
@@ -30,7 +30,26 @@ const Image = (props: ImageProps): ReactElement => {
   return <NextImage {...props} />;
 };
 
-const BlogLayout = styled.div``;
+const CustomLink = (props: any): ReactElement => {
+  const { href } = props;
+  const isInternalLink = href?.startsWith("/");
+
+  if (isInternalLink) {
+    return (
+      <Link href={href}>
+        <a {...props}>{props.children}</a>
+      </Link>
+    );
+  }
+
+  return <a target="_blank" rel="noopener noreferrer" {...props} />;
+};
+
+const BlogLayout = styled.div`
+  a {
+    text-decoration: underline;
+  }
+`;
 
 export default function BlogPost({ content }: Props): ReactElement {
   const Component = useMemo(
@@ -45,6 +64,7 @@ export default function BlogPost({ content }: Props): ReactElement {
           h1: Title,
           h2: SubTitle,
           Image: Image as any,
+          a: CustomLink,
         }}
       />
     </BlogLayout>

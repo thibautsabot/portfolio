@@ -1,0 +1,139 @@
+---
+title: Built my website without compromise using to Next.js
+description: Built my website without compromise using to Next.js
+---
+
+Rich Harris the creator of [Svelte](https://svelte.dev/)
+(who recently [joined Vercel](https://twitter.com/Rich_Harris/status/1458822051263823875)) [made a talk about "Transition App"](https://www.youtube.com/watch?v=860d8usGC0o)
+called "Have Single-Page Apps Ruined the Web?".
+
+In his talk, he presents the benefits and downsides of MPA (Multi Page Application) and SPA (Single Page Application)
+and states that the Web is not binary and that the best of both worlds is possible.
+The sweet spot lies between the two and frameworks are constantly improving.
+
+And I couldn't agree more! Actually, I strongly believe that [Next.js](https://nextjs.org/) is the perfect framework to achieve that.
+
+By providing ways to do Client Side Rendering (CSR), Server Side Rendering (SSR), Static Site Generation (SSG) and Incremental Static Regeneration (ISR)
+you have complete control on how your page should be rendered!
+
+Take this blog / portfolio as an example.
+
+There is a million different ways to build it, from an old-school vanilla MPA to a classic SPA with React, Vue, Svelte, Angular, ...
+
+The truth is that each page is different and have different requirements.
+
+Here a quick summary of the technical choices I made for my website's pages:
+
+<br />
+
+### Homepage
+
+The [Homepage](/) uses [ISR](https://vercel.com/docs/concepts/next.js/incremental-static-regeneration) because this is the main entry to my website.
+
+I want this page to be as fast as possible!
+
+I don't want to wait for JavaScript to load. I don't want to wait for my server to generate the page on demand.
+
+Having a static page to be rendered as fast as possible is a must!
+
+The homepage contains my "recent activities" that are fetched through API calls that will change over time.
+ISR allows me to serve a static page but to keep my activities relatively up to date as it'll regenerate the page every minute or so.
+
+This data fetching method is truly amazing as I can have a very fast response time with almost up to date informations!
+
+### Twitter page
+
+The [twitter](/twitter) page contains my latest tweets and retweets.
+
+For this page I chose to render it via SSR!
+
+There are two main reasons for this choice.
+First of all, I want this page to always be up-to-date. Unlike the Homepage, if you land here, you need to have the most recent tweets,
+otherwise this page lose half of its interest.
+
+SSG is a no go and ISR wouldn't cut it since you have a non-negligible chance of seeing a stale page (unless the `regenerate` option is very very low).
+
+By using SSR, I'm making sure that the server will always make the call to the Twitter API on every visit, thus serving the latest tweets.
+
+The second reason why I chose SSR is because the Twitter API in authenticated and I don't want to:
+
+- Leak my personal access token
+- Make the user login to see my tweets
+- Risk having issues with permission rights
+
+By making the calls server-side, I'm making sure that the token is safe and that only my provider (Vercel) can use it.
+
+### GitHub page
+
+[This page](/github) shows all of my activities from PR, commits, branches, discussions, ...
+
+Like the Twitter page, I want this one to show always up-to-date information.
+
+For this one I chose the infamous Client Side Rendering, but let me explain why.
+
+On this page, there are multiples API calls, one for each section.
+
+Even if network calls on the server are, in theory, much faster on average than on a user's browser,
+you still need for all of them to complete before rendering the page when using Server Side Rendering.
+
+The GitHub API can be quite slow and I don't want to make the user wait to see something.
+
+By rendering the static skeleton of my page I can quickly show a loading indicator to my users, notifying them than something is happening.
+
+Then I can make the API calls on the client and display the information as they come.
+
+It's not perfect since I'm rendering loading indicators for each section, but it's still better than a blank and sad page, don't you think?
+
+To keep this up-to-date and more responsive during navigation, I'm using [SWR](https://swr.vercel.app/).
+
+> SWR is a strategy to first return the data from cache (stale), then send the fetch request (revalidate), and finally come with the up-to-date data.
+> With SWR, components will get a stream of data updates constantly and automatically.
+> And the UI will be always fast and reactive.
+
+### Blog articles
+
+The [blogs pages](/blog) are the one you are reading right now, they are stored in local `.mdx` files.
+
+For my blogs, I'm using SSG to render them as plain HTML since they don't have any kind of interaction besides links.
+
+Because I don't have a lot of posts, building them is quite fast and I don't mind waiting a few seconds on each build to update them all.
+
+If you have a lot of articles, you can leverage `getStaticPaths` to only render the first X articles
+and provides any kind of [fallback](https://nextjs.org/docs/basic-features/data-fetching#the-fallback-key-required) for the others.
+
+<br />
+<br />
+
+---
+
+<br />
+<br />
+
+As you can see every page uses a different fetching method depending on its need.
+
+We are far from the "all MPA" or all "SPA model"! You can offer an amazing user experience by adding the benefits of
+Single Page Application but still be as fast as a more traditional MPA.
+
+Some people say that we killed the Web by trying to add more "tech" to it.
+
+**In my opinion, we are in a golden era for the Web, and we are just starting!!**
+
+By the way, Next.js is always improving. For example, there have been some experimentation about [disabling runtime JS](https://github.com/vercel/next.js/pull/11949) for certain pages,
+load third party scripts in [web workers](https://github.com/vercel/next.js/discussions/31517), ...
+
+But the most hyped experimental features are probably [SSR Streaming and Server Components](https://nextjs.org/docs/advanced-features/react-18)!
+
+Learn more about it here:
+
+<figure>
+  <iframe
+    width="100%"
+    height="400px%"
+    src="https://www.youtube.com/embed/TQQPAU21ZUw"
+    allowFullScreen
+  ></iframe>
+</figure>
+
+<br />
+
+**I can't wait to have more ways of making our websites even better!**

@@ -44,7 +44,7 @@ export default function BlogPostsCard(): ReactElement {
   return (
     <BlogPosts>
       <Card>
-        <Link href="/" passHref>
+        <Link href="/blog/Built%20my%20website%20without%20compromise%20using%20Nextjs" passHref>
           <a>
             <CardContent>
               <Image
