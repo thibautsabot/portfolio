@@ -39,7 +39,7 @@ const getUniqCommits = (events: any[] = []): any[] => {
 };
 
 const CommitsContainer = styled(BlockContainer)`
-  box-shadow: 8px 8px 5px #f9d6a1;
+  box-shadow: 0px 2px 10px 4px #f9d6a1;
 `;
 
 interface Props {

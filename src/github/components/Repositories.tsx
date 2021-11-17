@@ -20,7 +20,7 @@ type listUserReposResponse =
   Endpoints["GET /users/{username}/repos"]["response"]["data"];
 
 const RepositoriesContainer = styled(BlockContainer)`
-  box-shadow: 8px 8px 5px #a1f9c8;
+  box-shadow: 0px 2px 10px 4px #a1f9c8;
 `;
 
 export default function Repositories(): ReactElement {

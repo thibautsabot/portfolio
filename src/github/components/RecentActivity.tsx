@@ -17,7 +17,7 @@ type listUserReposResponse =
   Endpoints["GET /users/{username}/events"]["response"]["data"];
 
 const RecentActivityContainer = styled(BlockContainer)`
-  box-shadow: 8px 8px 5px #a1b0f9;
+  box-shadow: 0px 2px 10px 4px #a1b0f9;
 `;
 
 export default function RecentActivity(): ReactElement {

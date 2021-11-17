@@ -22,7 +22,7 @@ type listUserPullRequestsResponse =
   Endpoints["GET /repos/{owner}/{repo}/pulls"]["response"]["data"];
 
 const PullRequestsContainer = styled(BlockContainer)`
-  box-shadow: 8px 8px 5px #f9a1a1;
+  box-shadow: 0px 2px 10px 4px #f9a1a1;
 `;
 
 export default function PullRequests(): ReactElement {
