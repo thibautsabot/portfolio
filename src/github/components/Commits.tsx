@@ -44,6 +44,7 @@ const CommitsContainer = styled(BlockContainer)`
 
 interface Props {
   commits?: any[];
+  limit?: number
 }
 
 export default function Commits({ commits, limit = 10 }: Props): ReactElement {
