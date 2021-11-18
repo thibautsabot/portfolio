@@ -1,10 +1,11 @@
 import { ReactElement, useEffect, useState } from "react";
 import styled, { ThemeProvider, createGlobalStyle } from "styled-components";
 
+import Footer from "./components/Footer";
 import Header from "./components/Header";
 import Image from "next/image";
-import moon from "../assets/moon.webp";
-import sun from "../assets/sun.png";
+import moon from "../public/moon.webp";
+import sun from "../public/sun.png";
 
 const ChangeThemeButton = styled.button`
   background: transparent;
@@ -24,6 +25,7 @@ const ChangeThemeButton = styled.button`
 
 export const darkTheme = {
   color: "#f8f8f2",
+  opposit: "white",
   subColor: "grey",
   background: "#0e0e0e",
   // body: "#353535",
@@ -32,6 +34,7 @@ export const darkTheme = {
 
 export const lightTheme = {
   color: "black",
+  opposit: "black",
   subColor: "grey",
   background: "#ffcbcb",
   body: "white",
@@ -64,20 +67,6 @@ const Main = styled.main`
   position: relative;
   min-height: calc(100vh - 290px); // 100px from head + 100px from footer + 90px for margins
 `;
-
-const Footer = styled.footer`
-  background: rgba(255, 255, 255, 0.05);
-  margin-top: 50px;
-  padding: 40px;
-  margin-bottom: 20px;
-  display: flex;
-  align-items: center;
-  flex-wrap: wrap;
-`;
-
-const FooterLogo = styled.div`
-  padding: 0 5px;
-`
 
 interface Props {
   children: React.ReactNode;
@@ -122,37 +111,7 @@ export default function Layout({ children }: Props): ReactElement {
         />
       </ChangeThemeButton>
       <Main>{children}</Main>
-      <Footer>
-        Hosted on
-        <FooterLogo>
-          <a href="https://vercel.com/">
-            <Image src="/vercel.svg" alt="Vercel Logo" width={65} height={16} />
-          </a>
-        </FooterLogo>
-        , built with
-        <FooterLogo>
-          <a href="https://nextjs.org/">
-            <Image
-              src="/next_logo.png"
-              alt="Next.js Logo"
-              width={16}
-              height={16}
-            />
-          </a>
-        </FooterLogo>
-        and available on
-        <FooterLogo>
-          <a href="https://github.com/thibautsabot/portfolio/">
-            <Image
-              src="/github_logo.png"
-              alt="Github Logo"
-              width={16}
-              height={16}
-            />
-          </a>
-        </FooterLogo>
-        .
-      </Footer>
+      <Footer />
     </ThemeProvider>
   );
 }

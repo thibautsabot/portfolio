@@ -1,5 +1,7 @@
+import { ReactElement, useContext } from "react";
+
 import Image from "next/image";
-import { ReactElement } from "react";
+import { ThemeContext } from "styled-components";
 import android from "../assets/repository/android.png";
 import bananeplantee from "../assets/repository/bananeplantee.png";
 import chess from "../assets/repository/chess.png";
@@ -7,12 +9,12 @@ import cordova from "../assets/repository/cordova.png";
 import excalidraw from "../assets/repository/excalidraw.png";
 import fallback from "../assets/repository/fallback.jpeg";
 import franz from "../assets/repository/franz.png";
-import github from "../assets/repository/github.png";
+import github from "../../../public/github.svg";
 import lbc from "../assets/repository/lbc.png";
 import license from "../assets/repository/license.png";
 import lol from "../assets/repository/lol.png";
 import mailgo from "../assets/repository/mailgo.png";
-import next from "../assets/repository/next.png";
+import next from "../../../public/next.svg";
 import react from "../assets/repository/react.png";
 import smartthings from "../assets/repository/smartthings.jpg";
 import streamdeck from "../assets/repository/streamdeck.png";
@@ -24,7 +26,6 @@ const repositoryImage: { [key: string]: StaticImageData } = {
   "banane-plantee": bananeplantee,
   "cordova-plugin-advanced-http": cordova,
   "cordova-universal-links-plugin": cordova,
-  "github-reviews-ranking": github,
   "EloBuddy-Addons": lol,
   "streamdeck-plugin-smartthings": streamdeck,
   "typescript-streamdeck-boilerplate": streamdeck,
@@ -40,9 +41,13 @@ const repositoryImage: { [key: string]: StaticImageData } = {
   "react-typescript-boilerplate": react,
   "react-exercices": react,
   "react-native-personal-intranet": react,
-  "next.js": next,
   SmartThingsPublic: smartthings,
   LePointRssFeed: android,
+};
+
+const repositorySVG: { [key: string]: any } = {
+  "github-reviews-ranking": github,
+  "next.js": next,
 };
 
 export default function RepositoryIcon({
@@ -50,6 +55,22 @@ export default function RepositoryIcon({
 }: {
   name: string;
 }): ReactElement {
+  const themeContext = useContext(ThemeContext);
+
+  if (repositorySVG[name]) {
+    const SVG = repositorySVG[name];
+    return (
+      <div>
+        <SVG
+          width={24}
+          height={24}
+          fill={themeContext.opposit}
+          title={name}
+          alt={`${name} logo`}
+        />
+      </div>
+    );
+  }
   return (
     <div>
       <Image
