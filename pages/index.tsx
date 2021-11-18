@@ -8,11 +8,13 @@ import Missions from "../src/components/Missions";
 import Profile from "../src/components/Profile";
 import { ReactElement } from "react";
 import { User } from "@octokit/graphql-schema";
+import { fetcher } from "../src/github/utils/fetcher";
 import getDiscussions from "../src/github/utils/getDiscussions";
 import styled from "styled-components";
 
 interface Props {
   discussions: DiscussionCommentEdge[];
+  commits: any
 }
 
 const Logo = styled.div`
@@ -39,7 +41,7 @@ const HomeContainer = styled.div`
   }
 `
 
-export default function Home({ discussions }: Props): ReactElement {
+export default function Home({ discussions, commits }: Props): ReactElement {
   return (
     <HomeContainer>
       <Head>
@@ -50,7 +52,7 @@ export default function Home({ discussions }: Props): ReactElement {
 
       <Profile />
       <Subtitle>About me</Subtitle>
-      <p>
+      <div>
         Hi! I&apos;m a 27 years old french developper currently living in Paris.
         <Logo>
           <Image
@@ -61,8 +63,8 @@ export default function Home({ discussions }: Props): ReactElement {
             layout="fixed"
           />
         </Logo>
-      </p>
-      <p>
+      </div>
+      <div>
         I&apos;m a frontend lead developper at Leboncoin.
         <Logo>
           <Image
@@ -73,28 +75,30 @@ export default function Home({ discussions }: Props): ReactElement {
             layout="fixed"
           />
         </Logo>
-      </p>
+      </div>
       <Missions />
       <Subtitle>My recent blog posts</Subtitle>
       <BlogPostsCard />
       <Subtitle>My recent activity</Subtitle>
       <ActivityContainer>
         <Discussions discussions={discussions} />
-        <Commits limit={4} />
+        <Commits commits={commits} />
       </ActivityContainer>
     </HomeContainer>
   );
 }
 
 export async function getStaticProps(): Promise<{
-  props: { discussions: User["repositoryDiscussionComments"]["edges"] };
+  props: { discussions: User["repositoryDiscussionComments"]["edges"], commits: any };
   revalidate: number;
 }> {
   const discussions = (await getDiscussions())?.slice(0, 4);
+  const commits = (await fetcher("users/thibautsabot/events"))?.slice(0, 4);
 
   return {
     props: {
       discussions,
+      commits,
     },
     revalidate: 100,
   };

@@ -43,14 +43,14 @@ const CommitsContainer = styled(BlockContainer)`
 `;
 
 interface Props {
-  limit?: number;
+  commits?: any[];
 }
 
-export default function Commits({ limit = 10 }: Props): ReactElement {
+export default function Commits({ commits }: Props): ReactElement {
   // use `any` as the octokit types are invalid for events...
-  const { data, error } = useSWR<any>("users/thibautsabot/events", fetcher);
+  const { data, error } = useSWR<any>(!commits?.length ? "users/thibautsabot/events" : null, fetcher);
 
-  const lastCommits = getUniqCommits(data).slice(0, limit);
+  const lastCommits = commits?.length ? commits : getUniqCommits(data)
 
   return (
     <CommitsContainer>
@@ -58,10 +58,10 @@ export default function Commits({ limit = 10 }: Props): ReactElement {
       <Content>
         {error ? (
           <Error />
-        ) : !data ? (
+        ) : !data && !commits ? (
           <Loading />
         ) : (
-          getUniqCommits(lastCommits).map((commit) => (
+          lastCommits.map((commit) => (
             <Link
               passHref
               key={commit?.id}

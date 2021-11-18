@@ -40,6 +40,7 @@ export default function Profile(): ReactElement {
     <ProfileContainer>
       <PicturesContainer>
         <FaceImage
+          priority
           src="/face.jpg"
           alt="My face: Short hair with a beard"
           layout="fixed"
