@@ -9,7 +9,7 @@ const BlockContainer = styled.div`
   margin-left: 10px;
 
   @media (min-width: 960px) {
-    width: 430px;
+    width: 450px;
     margin-left: 25px;
   }
 `;

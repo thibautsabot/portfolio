@@ -16,7 +16,7 @@ const DiscussionsContainer = styled(BlockContainer)`
   box-shadow: 0px 2px 10px 4px #f4a1f9;
 
   @media (min-width: 960px) {
-    width: 480px;
+    width: 450px;
   }
 `;
 

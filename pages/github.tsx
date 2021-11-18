@@ -17,10 +17,12 @@ interface Props {
 const Github = styled.div`
   display: grid;
   grid-gap: 30px;
-  grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+  grid-template-columns: repeat(auto-fill, 100%);
   align-items: center;
 
   @media (min-width: 960px) {
+    grid-template-columns: repeat(auto-fill, minmax(400px, 1fr));
+
     > div {
       &:last-child {
         margin-left: calc(60%);

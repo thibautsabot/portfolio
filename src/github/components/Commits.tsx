@@ -46,11 +46,11 @@ interface Props {
   commits?: any[];
 }
 
-export default function Commits({ commits }: Props): ReactElement {
+export default function Commits({ commits, limit = 10 }: Props): ReactElement {
   // use `any` as the octokit types are invalid for events...
   const { data, error } = useSWR<any>(!commits?.length ? "users/thibautsabot/events" : null, fetcher);
 
-  const lastCommits = commits?.length ? commits : getUniqCommits(data)
+  const lastCommits = commits?.length ? commits : getUniqCommits(data).slice(0, limit)
 
   return (
     <CommitsContainer>
