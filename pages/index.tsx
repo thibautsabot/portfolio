@@ -53,7 +53,7 @@ export default function Home({ discussions, commits }: Props): ReactElement {
       <Profile />
       <Subtitle>About me</Subtitle>
       <div>
-        Hi! I&apos;m a 27 years old french developper currently living in Paris.
+        Hi there! I&apos;m a 27 years old French developer currently living in Paris.
         <Logo>
           <Image
             src="/eiffel_tower.png"
@@ -65,7 +65,7 @@ export default function Home({ discussions, commits }: Props): ReactElement {
         </Logo>
       </div>
       <div>
-        I&apos;m a frontend lead developper at Leboncoin.
+        I&apos;m a front end lead developer at Leboncoin.
         <Logo>
           <Image
             src="/lbc_logo.png"
@@ -76,6 +76,8 @@ export default function Home({ discussions, commits }: Props): ReactElement {
           />
         </Logo>
       </div>
+      <p>I love talking about <strong>performance</strong> and I&apos;m always eager to dig deeper into this field.</p>
+      <p>I find it essential to learn from others and share knowledge as much as I can!</p>
       <Missions />
       <Subtitle>My recent blog posts</Subtitle>
       <BlogPostsCard />

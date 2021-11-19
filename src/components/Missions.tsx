@@ -9,13 +9,12 @@ const MissionsList = styled.ul`
 export default function Missions(): ReactElement {
   return (
     <>
-      <p>My mains missions are: </p>
+      <p>My main missions are: </p>
       <MissionsList>
         <li>
           Guaranteeing good practices (tests, syntax, algorithm complexity,
           design pattern)
         </li>
-        <li>Sharing knowledge and help developers grow from it</li>
         <li>
           Assisting others on subjects where expertise is needed (debug,
           technical choices, ...)
@@ -25,8 +24,7 @@ export default function Missions(): ReactElement {
         </li>
         <li>Advocating for the technical choices of the Web developers</li>
         <li>
-          Leading chapter meetings and workshops and make sure they are
-          implemented in each team
+          Leading chapter meetings and workshops to make sure developers can learn from each others
         </li>
         <li>
           Constantly checking the health of our technical stack (Performance,
@@ -35,7 +33,7 @@ export default function Missions(): ReactElement {
       </MissionsList>
       <p>
         In my spare time I like to contribute to Next.js by{" "}
-        <Link href="/github">answering discussions</Link> or creating{" "}
+        <a href="https://github.com/vercel/next.js/discussions/">answering discussions</a> or creating{" "}
         <a href="https://github.com/vercel/next.js/pulls?q=author%3Athibautsabot">
           pull requests
         </a>
