@@ -8,13 +8,11 @@ import Missions from "../src/components/Missions";
 import Profile from "../src/components/Profile";
 import { ReactElement } from "react";
 import { User } from "@octokit/graphql-schema";
-import { fetcher } from "../src/github/utils/fetcher";
 import getDiscussions from "../src/github/utils/getDiscussions";
 import styled from "styled-components";
 
 interface Props {
   discussions: DiscussionCommentEdge[];
-  commits: any;
 }
 
 const Logo = styled.div`
@@ -41,7 +39,7 @@ const HomeContainer = styled.div`
   }
 `;
 
-export default function Home({ discussions, commits }: Props): ReactElement {
+export default function Home({ discussions }: Props): ReactElement {
   return (
     <HomeContainer>
       <Head>
@@ -91,7 +89,7 @@ export default function Home({ discussions, commits }: Props): ReactElement {
       <Subtitle>My recent activity</Subtitle>
       <ActivityContainer>
         <Discussions discussions={discussions} />
-        <Commits commits={commits} />
+        <Commits />
       </ActivityContainer>
     </HomeContainer>
   );
@@ -100,17 +98,14 @@ export default function Home({ discussions, commits }: Props): ReactElement {
 export async function getStaticProps(): Promise<{
   props: {
     discussions: User["repositoryDiscussionComments"]["edges"];
-    commits: any;
   };
   revalidate: number;
 }> {
   const discussions = (await getDiscussions())?.slice(0, 4);
-  const commits = (await fetcher("users/thibautsabot/events"))?.slice(0, 4);
 
   return {
     props: {
       discussions,
-      commits,
     },
     revalidate: 100,
   };

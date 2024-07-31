@@ -39,14 +39,15 @@ export default function Profile(): ReactElement {
   return (
     <ProfileContainer>
       <PicturesContainer>
-        <FaceImage
-          priority
-          src="/face.png"
-          alt="My face: Short hair with a beard"
-          layout="fixed"
-          width={200}
-          height={200}
-        />
+        <div style={{ position: "relative", width: 200, height: 200 }}>
+          <FaceImage
+            priority
+            src="/face.png"
+            alt="My face: Short hair with a beard"
+            layout="fill"
+            objectFit="cover"
+          />
+        </div>
         <AvatarImage>
           <FaceImage
             src="/avatar.jpg"

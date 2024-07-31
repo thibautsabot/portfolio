@@ -17,7 +17,7 @@ const HeaderContainer = styled.header`
 const HeaderLinkText = styled.a<{ isCurrentLink: boolean }>`
   text-decoration: ${(props): string =>
     props.isCurrentLink ? "underline" : "none"};
-  
+
   &:hover {
     text-decoration: underline;
   }
@@ -30,9 +30,9 @@ const HeaderLink = ({
   href: string;
   children: string;
 }): ReactElement => {
-  const router = useRouter()
-  const isCurrentLink = href === '/' ? href === router.asPath : router.asPath.includes(href)
-
+  const router = useRouter();
+  const isCurrentLink =
+    href === "/" ? href === router.asPath : router.asPath.includes(href);
 
   return (
     <Link href={href} passHref>
@@ -45,7 +45,6 @@ export default function Header(): ReactElement {
   return (
     <HeaderContainer>
       <HeaderLink href="/">Home</HeaderLink>
-      <HeaderLink href="/twitter">Twitter</HeaderLink>
       <HeaderLink href="/github">Github</HeaderLink>
       <HeaderLink href="/blog">Blog</HeaderLink>
     </HeaderContainer>
