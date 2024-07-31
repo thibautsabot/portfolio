@@ -14,7 +14,7 @@ import styled from "styled-components";
 
 interface Props {
   discussions: DiscussionCommentEdge[];
-  commits: any
+  commits: any;
 }
 
 const Logo = styled.div`
@@ -39,7 +39,7 @@ const HomeContainer = styled.div`
   a {
     text-decoration: underline;
   }
-`
+`;
 
 export default function Home({ discussions, commits }: Props): ReactElement {
   return (
@@ -53,7 +53,8 @@ export default function Home({ discussions, commits }: Props): ReactElement {
       <Profile />
       <Subtitle>About me</Subtitle>
       <div>
-        Hi there! I&apos;m a 27 years old French developer currently living in Paris.
+        Hi there! I&apos;m a 30 years old French developer currently living in
+        Paris.
         <Logo>
           <Image
             src="/eiffel_tower.png"
@@ -76,8 +77,14 @@ export default function Home({ discussions, commits }: Props): ReactElement {
           />
         </Logo>
       </div>
-      <p>I love talking about <strong>performance</strong> and I&apos;m always eager to dig deeper into this field.</p>
-      <p>I find it essential to learn from others and share knowledge as much as I can!</p>
+      <p>
+        I love talking about <strong>performance</strong> and I&apos;m always
+        eager to dig deeper into this field.
+      </p>
+      <p>
+        I find it essential to learn from others and share knowledge as much as
+        I can!
+      </p>
       <Missions />
       <Subtitle>My recent blog posts</Subtitle>
       <BlogPostsCard />
@@ -91,7 +98,10 @@ export default function Home({ discussions, commits }: Props): ReactElement {
 }
 
 export async function getStaticProps(): Promise<{
-  props: { discussions: User["repositoryDiscussionComments"]["edges"], commits: any };
+  props: {
+    discussions: User["repositoryDiscussionComments"]["edges"];
+    commits: any;
+  };
   revalidate: number;
 }> {
   const discussions = (await getDiscussions())?.slice(0, 4);

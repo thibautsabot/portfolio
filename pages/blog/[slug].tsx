@@ -19,7 +19,7 @@ const Paragraph = styled.p`
 `;
 
 const Title = styled.h1`
-  color: red;
+  color: ${(props): string => props.theme.color};
 `;
 
 const SubTitle = styled.h2`

@@ -1,5 +1,5 @@
 import Image from "next/image";
-import { ReactElement } from 'react'
+import { ReactElement } from "react";
 import styled from "styled-components";
 
 const FaceImage = styled(Image)`
@@ -41,7 +41,7 @@ export default function Profile(): ReactElement {
       <PicturesContainer>
         <FaceImage
           priority
-          src="/face.jpg"
+          src="/face.png"
           alt="My face: Short hair with a beard"
           layout="fixed"
           width={200}
@@ -64,7 +64,7 @@ export default function Profile(): ReactElement {
         </h2>
         <p>Buidling projects for 30M users with React & Next.js.</p>
         <p>
-          Helping our 50 Web developpers develop the #1 french website for
+          Helping our 60 Web developpers develop the #1 french website for
           classified advertisements.
         </p>
       </Description>
